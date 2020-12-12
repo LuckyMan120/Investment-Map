@@ -10,10 +10,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Logo from '~/components/header/Logo.vue';
 import Menu from '~/components/header/Menu.vue';
 
 export default Vue.extend({
   components: {
+    Logo,
     Menu,
   },
 });
