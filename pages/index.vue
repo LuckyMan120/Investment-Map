@@ -1,11 +1,16 @@
 <template>
-  <div class="container">
-    <div>Hello World!</div>
+  <div class="home-page">
+    <HomeCarousel />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import HomeCarousel from '~/components/home/HomeCarousel.vue';
 
-export default Vue.extend({});
+export default Vue.extend({
+  components: {
+    HomeCarousel,
+  },
+});
 </script>
