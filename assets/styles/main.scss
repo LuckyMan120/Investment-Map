@@ -1,0 +1,19 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.blog-slider .slick-list {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+.home-hero-wrapper .slick-dots li {
+  button::before {
+    font-size: 8px;
+  }
+
+  &.slick-active button::before {
+    color: #2275c3;
+    opacity: 1;
+  }
+}

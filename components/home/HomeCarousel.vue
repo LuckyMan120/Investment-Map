@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-wrapper">
+  <div class="home-hero-wrapper">
     <VueSlickCarousel v-bind="slickOptions">
       <div v-for="i in 5" :key="i" class="slide">
         <img

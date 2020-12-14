@@ -26,5 +26,6 @@ export default Vue.extend({
   position: relative;
   z-index: 1;
   padding: 0;
+  margin-top: 100px;
 }
 </style>
