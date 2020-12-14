@@ -1,6 +1,8 @@
 <template>
   <div class="header-wrapper">
-    <img src="~/assets/images/header-logo.png" />
+    <nuxt-link to="/">
+      <img src="~/assets/images/header-logo.png" />
+    </nuxt-link>
   </div>
 </template>
 

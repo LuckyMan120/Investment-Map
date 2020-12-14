@@ -1,0 +1,36 @@
+.button {
+  display: inline-block;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &-outline {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $primary-color;
+    padding: 5px 15px;
+    border: 2px solid #2c4574;
+
+    &:hover {
+      color: white;
+      background-color: #2c4574;
+    }
+  }
+
+  &-solid {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    padding: 8px 15px;
+    background-color: #df1e17;
+
+    &:hover {
+      color: white;
+      background-color: #bd1610;
+    }
+  }
+}

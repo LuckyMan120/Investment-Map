@@ -378,6 +378,7 @@ export default Vue.extend({
 
 .blog-slider-section {
   margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .blog-slide {
