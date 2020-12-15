@@ -77,51 +77,7 @@
               are starting to show demonstrable value due to multiple reasons
             </p>
 
-            <ul class="social-section-items">
-              <li class="social-section-item">
-                <p>
-                  Governments and communities understand that without desirable
-                  investments it’s impossible to develop socially,
-                  environmentally, and economically sustainable communities.
-                </p>
-              </li>
-
-              <li class="social-section-item">
-                <p>
-                  Investors get the benefit of adding guaranteed commitment from
-                  the government and community incentives over the returns on
-                  their investments.
-                </p>
-              </li>
-
-              <li class="social-section-item">
-                <p>
-                  51% of global consumers will pay extra for products and
-                  services committed to positive social and environmental
-                  impact.
-                </p>
-              </li>
-
-              <li class="social-section-item">
-                <p>
-                  Preservation of long-term gains, in most cases, requires
-                  factoring more than just financial dynamics to insure sound
-                  investment. Social, environmental, and local impact are key in
-                  unlocking additional gains that are mostly overlooked due to
-                  lack of investor insights.
-                </p>
-              </li>
-
-              <li class="social-section-item">
-                <p>
-                  With <strong>$6.1 trillion in capital gains</strong> based
-                  eligible funds for OZ re-investment, this is an incredible
-                  time to select the investment that works for your goals and
-                  vision. It’s a great time to Recharge America one community at
-                  a time.
-                </p>
-              </li>
-            </ul>
+            <ListItem class="social-section-items" :items="ListItems" />
           </div>
         </div>
       </div>
@@ -168,8 +124,21 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import ListItem from '~/components/ListItem/ListItem.vue';
+
 export default Vue.extend({
-  data: () => ({}),
+  components: {
+    ListItem,
+  },
+  data: () => ({
+    ListItems: [
+      'Governments and communities understand that without desirable investments it’s impossible to develop socially, environmentally, and economically sustainable communities.',
+      'Investors get the benefit of adding guaranteed commitment from the government and community incentives over the returns on their investments.',
+      '51% of global consumers will pay extra for products and services committed to positive social and environmental impact.',
+      'Preservation of long-term gains, in most cases, requires factoring more than just financial dynamics to insure sound investment. Social, environmental, and local impact are key in unlocking additional gains that are mostly overlooked due to lack of investor insights.',
+      'With <strong>$6.1 trillion in capital gains</strong> based eligible funds for OZ re-investment, this is an incredible time to select the investment that works for your goals and vision. It’s a great time to Recharge America one community at a time.',
+    ],
+  }),
 });
 </script>
 
@@ -219,6 +188,7 @@ export default Vue.extend({
 
   .inform-section-text {
     font-size: 1.53rem;
+    margin-bottom: 0;
     line-height: 1.7;
     text-align: center;
     color: $color-blue-1;
@@ -296,30 +266,6 @@ export default Vue.extend({
 
   .social-section-items {
     margin-top: 40px;
-    padding: 0;
-    padding-right: 2px;
-  }
-
-  .social-section-item {
-    font-size: 1.3rem;
-    list-style-type: none;
-    display: flex;
-    margin-bottom: 20px;
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-
-    &::before {
-      content: '';
-      background: url('~assets/icons/check-icon.png');
-      background-repeat: no-repeat;
-      display: block;
-      background-size: cover;
-      flex: 0 0 50px;
-      height: 50px;
-      margin-right: 90px;
-    }
   }
 }
 
