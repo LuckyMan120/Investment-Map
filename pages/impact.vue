@@ -126,6 +126,42 @@
         </div>
       </div>
     </section>
+
+    <section class="container-fluid esg-report-section">
+      <div class="row">
+        <div class="col-md-12">
+          <img
+            class="esg-report-section-graph"
+            src="~assets/images/impact/graph-esg.png"
+            alt="ESG and corporate financial performance graph"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="container-fluid nationwide-report-section">
+      <div class="row">
+        <div
+          class="col-md-6 justify-content-end nationwide-report-section-graph-container"
+        >
+          <img
+            class="nationwide-report-section-graph"
+            src="~assets/images/impact/graph-us.png"
+            alt="Nation wide increase firms graph"
+          />
+        </div>
+
+        <div
+          class="col-md-6 justify-content-start nationwide-report-section-graph-container"
+        >
+          <img
+            class="nationwide-report-section-graph"
+            src="~assets/images/impact/line-chart.png"
+            alt="Percent of children earnings graph"
+          />
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -233,7 +269,7 @@ export default Vue.extend({
 
 .oz-program-section {
   background-color: $color-cyan-1;
-  padding: 40px;
+  padding: 50px;
 
   .oz-program-section-text {
     color: $color-blue-1;
@@ -284,6 +320,35 @@ export default Vue.extend({
       height: 50px;
       margin-right: 90px;
     }
+  }
+}
+
+.esg-report-section {
+  .esg-report-section-graph {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.nationwide-report-section {
+  padding: 120px 50px;
+
+  .nationwide-report-section-graph-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+
+    &:last-of-type > img {
+      // line chart
+      max-width: 750px;
+    }
+  }
+
+  .nationwide-report-section-graph {
+    width: 100%;
+    height: auto;
+    max-width: 600px;
   }
 }
 </style>
