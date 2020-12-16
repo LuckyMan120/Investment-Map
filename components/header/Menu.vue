@@ -22,6 +22,18 @@
   </ul>
 </template>
 
+<script lang="ts">
+import Vue from 'vue';
+
+import Search from '~/components/header/Search.vue';
+
+export default Vue.extend({
+  components: {
+    Search,
+  },
+});
+</script>
+
 <style scoped>
 .menu {
   list-style: none;
@@ -32,12 +44,13 @@
 }
 
 .menu-item {
-  margin-right: 52px;
+  margin-right: 65px;
 }
 
 .menu-link {
   color: white;
   font-size: 0.975rem;
   text-decoration: none;
+  font-weight: bold;
 }
 </style>

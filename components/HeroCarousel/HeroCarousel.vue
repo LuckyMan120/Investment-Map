@@ -1,15 +1,20 @@
 <template>
   <div class="home-hero-wrapper">
     <VueSlickCarousel v-bind="slickOptions">
-      <div v-for="i in 5" :key="i" class="slide">
+      <div v-for="(item, i) in items" :key="i" class="slide">
         <img
-          src="~/assets/images/slider/slide1.png"
+          :src="require(`~/assets/images/slider/${item.image}.png`)"
           class="img-responsive cover slide-img"
         />
         <div class="slide-content">
-          <h1 class="slide-heading">Sound investments. Strong Communities.</h1>
-          <h2 class="slide-subheading">Learn More About Opportunity Zones</h2>
-          <a href="#" class="slide-btn">Explore</a>
+          <h1 class="slide-heading">{{ item.title }}</h1>
+          <h2 class="slide-subheading">{{ item.subtitle }}</h2>
+          <a
+            href="#"
+            class="slide-btn"
+            :class="{ 'slide-btn--outline': btnOutline }"
+            >{{ item.button }}</a
+          >
         </div>
       </div>
     </VueSlickCarousel>
@@ -20,6 +25,13 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
+    },
+    btnOutline: Boolean,
+  },
   data() {
     return {
       slickOptions: {
@@ -69,6 +81,11 @@ export default Vue.extend({
   border-radius: 30px;
   padding: 7px 35px;
   margin-top: 15px;
+}
+
+.slide-btn--outline {
+  background-color: transparent;
+  border: 2px solid #fff;
 }
 
 .slick-active .slide-content {
