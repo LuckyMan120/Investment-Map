@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="news-page">
     <HeroCarousel :items="carouselItems" btnOutline />
 
     <section class="container page-into-section">

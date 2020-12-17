@@ -1,0 +1,374 @@
+<template>
+  <div class="calculator-page">
+    <!--Tabs-->
+    <CalculatorTabs class="calculator-tabs" v-model="activeTab" :tabs="tabs">
+      <!--Investment tab-->
+      <div
+        v-show="activeTab === 'investment'"
+        key="investment"
+        class="investment-tab"
+      >
+        <header class="calculator-header">
+          <h1 class="calculator-header-title">Investment</h1>
+          <h2 class="calculator-header-subtitle">Calculator</h2>
+        </header>
+
+        <section class="investment-pre-calc">
+          <div class="input-select-container mr-4">
+            <span class="input-select-label">State</span>
+            <select class="custom-select">
+              <option selected>Alabama</option>
+            </select>
+          </div>
+
+          <div class="input-select-container">
+            <span class="input-select-label">Sector</span>
+            <select class="custom-select">
+              <option selected>Health Care</option>
+            </select>
+          </div>
+
+          <div class="input-text-container">
+            <span class="input-text-label">Initial Value of Business</span>
+            <span class="input-text-prefix">$</span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <div class="input-text-container">
+            <span class="input-text-label">Cash Investment in Business</span>
+            <span class="input-text-prefix">$</span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <div class="input-text-container">
+            <span class="input-text-label">Sales Price of the Business</span>
+            <span class="input-text-prefix">$</span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <div class="input-text-container">
+            <span class="input-text-label">Number of Employees</span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <button class="button">Calculate</button>
+        </section>
+
+        <section class="investment-result">
+          <div class="investment-result-statics-container">
+            <div class="investment-result-statics-row">
+              <span class="investment-result-statics-title">With OZ</span>
+              <span class="investment-result-statics-prefix">&</span>
+              <span class="investment-result-statics-data">477,800</span>
+            </div>
+
+            <div class="investment-result-statics-row">
+              <span class="investment-result-statics-title">Without OZ</span>
+              <span class="investment-result-statics-prefix">&</span>
+              <span class="investment-result-statics-data">398,300</span>
+            </div>
+
+            <div class="investment-result-statics-row">
+              <span class="investment-result-statics-title">Difference</span>
+              <span class="investment-result-statics-prefix">&</span>
+              <span class="investment-result-statics-data">80,000</span>
+            </div>
+          </div>
+
+          <div class="investment-result-chart-container">
+            <div class="investment-result-chart">
+              <div
+                class="investment-result-chart-bar investment-result-chart-bar-with-oz"
+              >
+                $ 477.8 k
+              </div>
+              <div class="investment-result-chart-text">
+                <span class="investment-result-chart-title">With OZ</span>
+                <span class="investment-result-chart-subtitle">After Tax</span>
+              </div>
+            </div>
+
+            <div class="investment-result-chart">
+              <div
+                class="investment-result-chart-bar investment-result-chart-bar-without-oz"
+              >
+                $ 398.3 k
+              </div>
+              <div class="investment-result-chart-text">
+                <span class="investment-result-chart-title">Without OZ</span>
+                <span class="investment-result-chart-subtitle">After Tax</span>
+              </div>
+            </div>
+
+            <div class="investment-result-chart">
+              <div
+                class="investment-result-chart-bar investment-result-chart-bar-diff"
+              >
+                $ 53 k
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-6 d-flex justify-content-end">
+              <button class="button button-grey">
+                <fa class="mr-2" :icon="faChevronLeft" /> Back
+              </button>
+            </div>
+            <div class="col-md-6 d-flex justify-content-start">
+              <button class="button">Download</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!--Read state tab-->
+      <div
+        v-show="activeTab === 'real-estate'"
+        key="real-estate"
+        class="real-estate-tab"
+      >
+        real-estate tab
+      </div>
+    </CalculatorTabs>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import CalculatorTabs from '~/components/CalculatorTabs/CalculatorTabs.vue';
+
+export default Vue.extend({
+  layout: 'calculator',
+  components: {
+    CalculatorTabs,
+  },
+  data: () => ({
+    // Tabs
+    activeTab: '',
+    tabs: [
+      {
+        text: 'Investment',
+        name: 'investment',
+      },
+      {
+        text: 'Real Estate',
+        name: 'real-estate',
+      },
+    ],
+  }),
+  computed: {
+    faChevronLeft: () => faChevronLeft,
+  },
+});
+</script>
+
+<style scoped lang="scss">
+.calculator-page {
+  height: calc(100vh - 78px);
+  width: 100%;
+  background-color: $color-grey-3;
+}
+
+.calculator-tabs {
+  position: absolute;
+  right: 100px;
+  top: calc(50px + 78px);
+}
+
+.investment-tab {
+  //min-width: 500px;
+}
+
+.calculator-header {
+  border-bottom: 1px solid $color-grey-3;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+
+  .calculator-header-title {
+    font-size: 2.1rem;
+    color: $color-blue-3;
+    font-weight: bold;
+    margin-bottom: 5px;
+    line-height: 1.1;
+  }
+
+  .calculator-header-subtitle {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: $color-blue-6;
+    margin-bottom: 0;
+  }
+}
+
+.custom-select {
+  border-radius: 500px;
+  font-size: 0.7rem;
+}
+
+.input-select-container,
+.input-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-select-label,
+.input-text-label {
+  font-size: 0.8rem;
+  margin-right: 25px;
+  color: $color-grey-3;
+}
+
+.input-text-container {
+  grid-column: 1 / -1;
+
+  .input-text-label {
+    margin-right: auto;
+  }
+
+  .input-text-prefix {
+    color: $color-grey-5;
+    margin: 0 10px;
+  }
+
+  & input {
+    border-radius: 500px;
+    font-size: 0.7rem;
+    max-width: 123px;
+  }
+}
+
+.investment-pre-calc {
+  display: grid;
+  grid-template-columns: 1.6fr 1.1fr;
+  grid-column-gap: 16px;
+  grid-row-gap: 14px;
+
+  & > div.input-select-container {
+    margin-bottom: 10px;
+  }
+
+  .button {
+    grid-column: 2 / 3;
+    margin-left: auto;
+    margin-top: 35px;
+  }
+}
+
+.button {
+  background-color: $color-blue-4;
+  color: $color-white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 8px 20px;
+  border: 1px solid $color-blue-4;
+
+  &:hover {
+    background-color: $color-blue-3;
+    border-color: $color-blue-3;
+    color: $color-grey-4;
+  }
+}
+
+.button-grey {
+  border-color: $color-grey-7;
+  color: $color-grey-7;
+  background-color: transparent;
+
+  &:hover {
+    background-color: $color-grey-5;
+    color: $color-grey-7;
+    border-color: $color-grey-7;
+  }
+}
+
+.investment-result-statics-container {
+  margin-top: 30px;
+  background-color: $color-grey-6;
+  color: $color-grey-3;
+  padding: 20px 14px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: grid;
+  grid-gap: 14px;
+
+  .investment-result-statics-title {
+    margin-right: auto;
+  }
+
+  .investment-result-statics-prefix {
+    margin: 0 24px;
+  }
+
+  .investment-result-statics-data {
+    min-width: 70px;
+  }
+
+  .investment-result-statics-row {
+    display: flex;
+  }
+}
+
+.investment-result-chart-container {
+  margin-top: 20px;
+  background-color: $color-grey-6;
+  padding: 14px 0;
+  border-left: 1px solid $color-blue-5;
+
+  .investment-result-chart {
+    display: flex;
+    align-items: center;
+  }
+
+  .investment-result-chart-bar {
+    background: linear-gradient(to right, $color-blue-6, $color-blue-3);
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: $color-white;
+    line-height: 1.1;
+    align-items: center;
+    padding: 12px;
+    border-radius: 0 100px 100px 0;
+    margin-right: 11px;
+    text-align: right;
+    margin-bottom: 7px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  // with oz bar
+  .investment-result-chart-bar-with-oz {
+    width: 70%;
+  }
+
+  // without oz bar
+  .investment-result-chart-bar-without-oz {
+    width: 40%;
+  }
+
+  // diff bar
+  .investment-result-chart-bar-diff {
+    width: 20%;
+  }
+
+  .investment-result-chart-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .investment-result-chart-title {
+    color: $color-blue-3;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+
+  .investment-result-chart-subtitle {
+    font-size: 0.65rem;
+    color: $color-blue-6;
+  }
+}
+</style>
