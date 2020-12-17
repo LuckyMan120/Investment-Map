@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <HomeCarousel />
+    <HeroCarousel :items="carouselItems" />
     <b-container class="plain-section how-big-is-opportunity-container">
       <b-row>
         <b-col cols="12">
@@ -168,11 +168,11 @@ import {
   faChevronRight,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import HomeCarousel from '~/components/home/HomeCarousel.vue';
+import HeroCarousel from '~/components/HeroCarousel/HeroCarousel.vue';
 
 export default Vue.extend({
   components: {
-    HomeCarousel,
+    HeroCarousel,
   },
 
   computed: {
@@ -229,6 +229,43 @@ export default Vue.extend({
           id: 8,
           image: 'slide4',
           title: 'Opportunity? YES! But There Are Some Pitfalls As Well…',
+        },
+      ],
+      carouselItems: [
+        {
+          id: 1,
+          image: 'slide1',
+          title: 'Sound investments. Strong Communities.',
+          subtitle: 'Learn More About Opportunity Zones',
+          button: 'Explore',
+        },
+        {
+          id: 2,
+          image: 'slide1',
+          title: 'Sound investments. Strong Communities.',
+          subtitle: 'Learn More About Opportunity Zones',
+          button: 'Explore',
+        },
+        {
+          id: 3,
+          image: 'slide1',
+          title: 'Sound investments. Strong Communities.',
+          subtitle: 'Learn More About Opportunity Zones',
+          button: 'Explore',
+        },
+        {
+          id: 4,
+          image: 'slide1',
+          title: 'Sound investments. Strong Communities.',
+          subtitle: 'Learn More About Opportunity Zones',
+          button: 'Explore',
+        },
+        {
+          id: 5,
+          image: 'slide1',
+          title: 'Sound investments. Strong Communities.',
+          subtitle: 'Learn More About Opportunity Zones',
+          button: 'Explore',
         },
       ],
     };
