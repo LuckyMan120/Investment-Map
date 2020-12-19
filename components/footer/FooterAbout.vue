@@ -21,26 +21,30 @@
             <b-col cols="5">
               <ul class="links">
                 <li class="link-item">
-                  <a href="#" class="link">Home</a>
+                  <nuxt-link to="/" class="link">Home</nuxt-link>
                 </li>
                 <li class="link-item">
-                  <a href="#" class="link">Opportunity</a>
+                  <nuxt-link to="opportunity" class="link"
+                    >Opportunity</nuxt-link
+                  >
                 </li>
                 <li class="link-item">
-                  <a href="#" class="link">Calculator</a>
+                  <nuxt-link to="/calculator" class="link"
+                    >Calculator</nuxt-link
+                  >
                 </li>
                 <li class="link-item">
-                  <a href="#" class="link">News</a>
+                  <nuxt-link to="/news" class="link">News</nuxt-link>
                 </li>
               </ul>
             </b-col>
             <b-col cols="5">
               <ul class="links">
                 <li class="link-item">
-                  <a href="#" class="link">About</a>
+                  <nuxt-link to="/about" class="link">About</nuxt-link>
                 </li>
                 <li class="link-item">
-                  <a href="#" class="link">Contact</a>
+                  <nuxt-link to="/contact" class="link">Contact</nuxt-link>
                 </li>
                 <li class="link-item">
                   <a href="#" class="link">FAQs</a>
