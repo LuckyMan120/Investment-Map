@@ -1,7 +1,8 @@
 @import './components/buttons';
+@import "./base/typography";
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: Proxima, sans-serif;
 }
 
 .blog-slider .slick-list {

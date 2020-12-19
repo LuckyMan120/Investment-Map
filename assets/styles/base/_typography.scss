@@ -1,0 +1,36 @@
+// import fonts
+@font-face {
+  font-family: Proxima;
+  src: url('~assets/fonts/Mark Simonson - Proxima Nova Alt Regular.otf')
+    format('opentype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Proxima;
+  src: url('~assets/fonts/Mark Simonson - Proxima Nova Alt Semibold.otf')
+    format('opentype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Proxima;
+  src: url('~assets/fonts/Mark Simonson - Proxima Nova Alt Bold.otf')
+    format('opentype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Proxima;
+  src: url('~assets/fonts/Mark Simonson - Proxima Nova Alt Black.otf')
+    format('opentype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: Proxima;
+  src: url('~assets/fonts/Mark Simonson - Proxima Nova Alt Condensed Regular Italic.otf')
+    format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
