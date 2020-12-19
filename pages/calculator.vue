@@ -1,7 +1,13 @@
 <template>
   <div class="calculator-page">
     <!--Tabs-->
-    <CalculatorTabs class="calculator-tabs" v-model="activeTab" :tabs="tabs">
+    <CalculatorTabs
+      v-model="activeTab"
+      class="calculator-tabs"
+      :tabs="tabs"
+      :info="info"
+      @back="info = false"
+    >
       <!--Investment tab-->
       <div
         v-show="activeTab === 'investment'"
@@ -10,6 +16,13 @@
       >
         <header class="calculator-header">
           <h1 class="calculator-header-title">Investment</h1>
+          <button class="calculator-header-help-btn" @click="info = true">
+            <img
+              src="~assets/icons/question-mark-circle.png"
+              class="calculator-header-icon"
+              alt="question mark icon"
+            />
+          </button>
           <h2 class="calculator-header-subtitle">Calculator</h2>
         </header>
 
@@ -51,10 +64,12 @@
             <input type="text" class="form-control" />
           </div>
 
-          <button class="button">Calculate</button>
+          <button class="button" @click="isCalculated = !isCalculated">
+            Calculate
+          </button>
         </section>
 
-        <section class="investment-result">
+        <section v-if="isCalculated" class="investment-result">
           <div class="investment-result-statics-container">
             <div class="investment-result-statics-row">
               <span class="investment-result-statics-title">With OZ</span>
@@ -128,7 +143,48 @@
         key="real-estate"
         class="real-estate-tab"
       >
-        real-estate tab
+        <header class="calculator-header">
+          <h1 class="calculator-header-title">Investment</h1>
+          <button class="calculator-header-help-btn">
+            <img
+              src="~assets/icons/question-mark-circle-grey.png"
+              class="calculator-header-icon"
+              alt="question mark icon"
+            />
+          </button>
+          <h2 class="calculator-header-subtitle">Calculator</h2>
+          <select class="calculator-header-select">
+            <option selected>Alabama</option>
+          </select>
+        </header>
+
+        <section class="real-estate-pre-calc">
+          <div class="input-text-container">
+            <span class="input-text-label">Price paid for the Asset</span>
+            <span class="input-text-prefix">$</span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <div class="input-text-container">
+            <span class="input-text-label">Sold price of the Asset</span>
+            <span class="input-text-prefix">$</span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <div class="input-text-container">
+            <span class="input-text-label">Assumed Growth rate (%)</span>
+            <span class="input-text-prefix"></span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <div class="input-text-container">
+            <span class="input-text-label">Holding Period (years)</span>
+            <span class="input-text-prefix"></span>
+            <input type="text" class="form-control" />
+          </div>
+
+          <button class="button">Calculate</button>
+        </section>
       </div>
     </CalculatorTabs>
   </div>
@@ -157,6 +213,9 @@ export default Vue.extend({
         name: 'real-estate',
       },
     ],
+
+    isCalculated: false,
+    info: false,
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
@@ -190,6 +249,9 @@ export default Vue.extend({
   border-bottom: 1px solid $color-grey-3;
   padding-bottom: 15px;
   margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 
   .calculator-header-title {
     font-size: 2.1rem;
@@ -197,6 +259,7 @@ export default Vue.extend({
     font-weight: bold;
     margin-bottom: 5px;
     line-height: 1.1;
+    flex: 1 0 50%;
   }
 
   .calculator-header-subtitle {
@@ -204,6 +267,29 @@ export default Vue.extend({
     text-transform: uppercase;
     color: $color-blue-6;
     margin-bottom: 0;
+    flex: 1 0 50%;
+    align-self: flex-start;
+  }
+
+  .calculator-header-help-btn {
+    background: none;
+    border: none;
+    border-radius: 100px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .calculator-header-icon {
+    height: 25px;
+    width: 25px;
+  }
+
+  .calculator-header-select {
+    border-radius: 500px;
+    font-size: 0.7rem;
+    align-self: stretch;
+    padding: 5px 17px;
+    flex: 1 0 170px;
   }
 }
 
@@ -244,7 +330,8 @@ export default Vue.extend({
   }
 }
 
-.investment-pre-calc {
+.investment-pre-calc,
+.real-estate-pre-calc {
   display: grid;
   grid-template-columns: 1.6fr 1.1fr;
   grid-column-gap: 16px;
