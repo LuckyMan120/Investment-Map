@@ -95,6 +95,11 @@ export default Vue.extend({
     faQuoteLeft,
     faQuoteRight,
   }),
+  head() {
+    return {
+      titleTemplate: '%s - About',
+    };
+  },
 });
 </script>
 

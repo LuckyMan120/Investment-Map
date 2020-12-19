@@ -285,6 +285,12 @@ export default Vue.extend({
     faStepForward: () => faStepForward,
     faStepBackward: () => faStepBackward,
   },
+
+  head() {
+    return {
+      titleTemplate: '%s - News',
+    };
+  },
 });
 </script>
 

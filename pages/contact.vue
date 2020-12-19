@@ -105,6 +105,18 @@
   </div>
 </template>
 
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
+  head() {
+    return {
+      titleTemplate: '%s - Contact',
+    };
+  },
+});
+</script>
+
 <style lang="scss" scoped>
 .get-in-touch-section {
   display: flex;

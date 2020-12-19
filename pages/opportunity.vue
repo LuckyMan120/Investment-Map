@@ -238,6 +238,11 @@ export default Vue.extend({
       'Investors enjoy the same tax status as they would otherwise (i.e. depreciation, etc.)',
     ],
   }),
+  head() {
+    return {
+      titleTemplate: '%s - Opportunity',
+    };
+  },
 });
 </script>
 

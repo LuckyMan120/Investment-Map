@@ -161,6 +161,11 @@ export default Vue.extend({
   computed: {
     faChevronLeft: () => faChevronLeft,
   },
+  head() {
+    return {
+      titleTemplate: '%s - Calculator',
+    };
+  },
 });
 </script>
 

@@ -139,6 +139,11 @@ export default Vue.extend({
       'With <strong>$6.1 trillion in capital gains</strong> based eligible funds for OZ re-investment, this is an incredible time to select the investment that works for your goals and vision. It’s a great time to Recharge America one community at a time.',
     ],
   }),
+  head() {
+    return {
+      titleTemplate: '%s - Impact',
+    };
+  },
 });
 </script>
 
