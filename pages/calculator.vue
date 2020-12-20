@@ -193,6 +193,13 @@
         </section>
       </div>
     </CalculatorTabs>
+
+    <!--Search-->
+    <CalculatorSearch
+      v-model="searchInput"
+      :results="resultItems"
+      class="calculator-search"
+    />
   </div>
 </template>
 
@@ -200,11 +207,13 @@
 import Vue from 'vue';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import CalculatorTabs from '~/components/CalculatorTabs/CalculatorTabs.vue';
+import CalculatorSearch from '~/components/CalculatorSearch/CalculatorSearch.vue';
 
 export default Vue.extend({
   layout: 'calculator',
   components: {
     CalculatorTabs,
+    CalculatorSearch,
   },
   data: () => ({
     // Tabs
@@ -267,6 +276,17 @@ export default Vue.extend({
 
     isCalculated: false,
     info: true,
+
+    // search
+    searchInput: '',
+    resultItems: [
+      {
+        text: 'Chilton',
+      },
+      {
+        text: 'Alabama',
+      },
+    ],
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
@@ -284,6 +304,8 @@ export default Vue.extend({
   height: calc(100vh - 78px);
   width: 100%;
   background-color: $color-grey-3;
+  background-image: url('~assets/images/calculator/bg.png');
+  background-size: cover;
 }
 
 .calculator-tabs {
@@ -513,5 +535,11 @@ export default Vue.extend({
     font-size: 0.65rem;
     color: $color-blue-6;
   }
+}
+
+.calculator-search {
+  position: absolute;
+  left: 100px;
+  top: calc(50px + 78px);
 }
 </style>
