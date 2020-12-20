@@ -26,7 +26,13 @@
       </transition-group>
     </div>
     <!--Info shell-->
-    <div v-else class="info-shell">
+    <div
+      v-else
+      class="info-shell"
+      :class="{
+        'info-shell-no-sidebar': sidebarInfo === null || !isSideBarShown,
+      }"
+    >
       <button class="info-shell-btn" @click="$emit('back')">
         Back to calculator
         <img
@@ -37,104 +43,45 @@
       </button>
 
       <!--Main info-->
-      <div class="card main-info-card">
+      <div v-if="mainInfo" class="card main-info-card">
         <div class="info-content-container">
           <header class="main-info-header">
-            <h2 class="main-header-info-title">Alabama</h2>
+            <h2 class="main-header-info-title">{{ mainInfo.title }}</h2>
             <div class="info-header">
               <span class="info-header-title">County</span>
-              <span class="info-header-title-value">Chilton</span>
+              <span class="info-header-title-value">{{
+                mainInfo.country
+              }}</span>
               <span class="info-header-subtitle">GEO ID</span>
-              <span class="info-header-subtitle-value">01021060102</span>
+              <span class="info-header-subtitle-value">{{
+                mainInfo.geoId
+              }}</span>
             </div>
           </header>
 
           <div class="info-content">
-            <span class="info-content-row">
+            <span
+              v-for="(row, i) in mainInfo.rows"
+              :key="i"
+              class="info-content-row"
+              ref="mainInfoRow"
+            >
               <span class="info-content-row-text">
-                Urbanised / Total Population
+                {{ row.text }}
               </span>
-              <span class="info-content-row-value">0/6303</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                Number of people with college degree or higher
-              </span>
-              <span class="info-content-row-value">276</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                Single family unit housing structures (%)
-              </span>
-              <span class="info-content-row-value">65.63</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                2 -9 Unit housing structure (%)
-              </span>
-              <span class="info-content-row-value">5.47</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                10 or more Unit housing structure (%)
-              </span>
-              <span class="info-content-row-value">0</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                Median household income
-              </span>
-              <span class="info-content-row-value">$32,301</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                People aged 25 or older with bachelor’s Degree Master’s degree,
-                Professional school degree, doctorate degree, divided by the
-                total number of people aged 25 or older in a tract (%)
-              </span>
-              <span class="info-content-row-value">5.89</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                Median gross rent for renter occupied housing units
-              </span>
-              <span class="info-content-row-value">3.57</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                Average annual job growth rate (2004 - 2013)
-              </span>
-              <span class="info-content-row-value">3.57</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                Residents Per square mile
-              </span>
-              <span class="info-content-row-value">7</span>
-            </span>
-
-            <span class="info-content-row">
-              <span class="info-content-row-text">
-                Residents Per square mile
-              </span>
-              <span class="info-content-row-value">41</span>
+              <span class="info-content-row-value">{{ row.value }}</span>
             </span>
           </div>
         </div>
       </div>
 
       <!--Side bar info-->
-      <div class="card side-bar-info-card">
-        <button class="card-close-btn">
+      <div
+        v-if="sidebarInfo"
+        v-show="isSideBarShown"
+        class="card side-bar-info-card"
+      >
+        <button @click="isSideBarShown = false" class="card-close-btn">
           <img
             class="card-close-btn-icon"
             src="~assets/icons/icon-close.png"
@@ -145,44 +92,23 @@
         <div class="info-content-container">
           <header class="info-header">
             <span class="info-header-title">County</span>
-            <span class="info-header-title-value">Chilton</span>
+            <span class="info-header-title-value">{{
+              sidebarInfo.country
+            }}</span>
             <span class="info-header-subtitle">GEO ID</span>
-            <span class="info-header-subtitle-value">01021060102</span>
+            <span class="info-header-subtitle-value">{{
+              sidebarInfo.geoId
+            }}</span>
           </header>
 
           <div class="info-content">
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">0/6303</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">819</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">16.83</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">3.39</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">3.39</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">$ 48,301</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">21.31</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">479</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">-1.19</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">88</span>
-            </span>
-            <span class="info-content-row side-bar-content-row">
-              <span class="info-content-row-value">253</span>
+            <span
+              v-for="(row, i) in sidebarInfo.rows"
+              :key="i"
+              class="info-content-row side-bar-content-row"
+              :style="{ minHeight: `${mainInfoHeights[i]}px` }"
+            >
+              <span class="info-content-row-value">{{ row.value }}</span>
             </span>
           </div>
         </div>
@@ -218,17 +144,35 @@ export default Vue.extend({
       required: true,
     },
     info: Boolean,
+    mainInfo: Object || null,
+    sidebarInfo: Object || null,
   },
+  data: () => ({
+    mainInfoHeights: [],
+    isSideBarShown: true,
+  }),
   created() {
     // Update v-model tab to the first passed tab if v-model value is not valid
     if (this.tabs?.length > 0) {
+      // @ts-ignore: Unreachable code error
       if (!this.tabs.some((tab) => tab.name === this.modelValue)) {
+        // @ts-ignore: Unreachable code error
         this.$emit('update:modelValue', this.tabs[0].name);
       }
     }
   },
+  mounted() {
+    // get heights of the each main info rows
+    // @ts-ignore: Unreachable code error
+    this.$refs.mainInfoRow.forEach((row) => {
+      // get element height and save
+      // @ts-ignore: Unreachable code error
+      this.mainInfoHeights.push(row.getBoundingClientRect().height);
+    });
+  },
   methods: {
     setSelectedTab(i: any) {
+      // @ts-ignore: Unreachable code error
       this.$emit('update:modelValue', this.tabs[i].name);
     },
   },
@@ -282,27 +226,7 @@ export default Vue.extend({
   min-height: 400px;
   max-height: calc(100vh - 140px);
   overflow: auto;
-}
-
-// Tab slider transition
-.tr-slide-leave-active,
-.tr-slide-enter-active {
-  transition: all 0.4s ease-in-out;
-}
-
-.tr-slide-enter,
-.tr-slide-leave-to {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-.tr-slide-enter {
-  transform: translateY(-100%);
-}
-.tr-slide-leave-to {
-  transform: translateY(100%);
+  overflow-x: hidden;
 }
 
 // info shell
@@ -312,11 +236,16 @@ export default Vue.extend({
   grid-template-rows: auto auto;
   grid-column-gap: 15px;
   grid-row-gap: 35px;
+  grid-auto-flow: revert;
 
   .card {
     min-width: unset;
     padding: 10px;
   }
+}
+
+.info-shell-no-sidebar {
+  grid-template-columns: 650px;
 }
 
 .info-shell-btn {
@@ -358,6 +287,10 @@ export default Vue.extend({
 .main-info-card {
   display: flex;
   flex-direction: column;
+}
+
+.side-bar-info-card {
+  grid-column: 2 / -1;
 }
 
 .info-header {

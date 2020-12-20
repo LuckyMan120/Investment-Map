@@ -6,6 +6,8 @@
       class="calculator-tabs"
       :tabs="tabs"
       :info="info"
+      :main-info="calcMainInfo"
+      :sidebar-info="calcSideBarInfo"
       @back="info = false"
     >
       <!--Investment tab-->
@@ -44,27 +46,31 @@
           <div class="input-text-container">
             <span class="input-text-label">Initial Value of Business</span>
             <span class="input-text-prefix">$</span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
           <div class="input-text-container">
             <span class="input-text-label">Cash Investment in Business</span>
             <span class="input-text-prefix">$</span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
           <div class="input-text-container">
             <span class="input-text-label">Sales Price of the Business</span>
             <span class="input-text-prefix">$</span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
           <div class="input-text-container">
             <span class="input-text-label">Number of Employees</span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
-          <button class="button" @click="isCalculated = !isCalculated">
+          <button
+            v-if="!isCalculated"
+            class="button"
+            @click="isCalculated = true"
+          >
             Calculate
           </button>
         </section>
@@ -126,7 +132,7 @@
 
           <div class="row mt-4">
             <div class="col-md-6 d-flex justify-content-end">
-              <button class="button button-grey">
+              <button @click="isCalculated = false" class="button button-grey">
                 <fa class="mr-2" :icon="faChevronLeft" /> Back
               </button>
             </div>
@@ -153,7 +159,7 @@
             />
           </button>
           <h2 class="calculator-header-subtitle">Calculator</h2>
-          <select class="calculator-header-select">
+          <select class="calculator-header-select custom-select">
             <option selected>Alabama</option>
           </select>
         </header>
@@ -162,25 +168,25 @@
           <div class="input-text-container">
             <span class="input-text-label">Price paid for the Asset</span>
             <span class="input-text-prefix">$</span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
           <div class="input-text-container">
             <span class="input-text-label">Sold price of the Asset</span>
             <span class="input-text-prefix">$</span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
           <div class="input-text-container">
             <span class="input-text-label">Assumed Growth rate (%)</span>
             <span class="input-text-prefix"></span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
           <div class="input-text-container">
             <span class="input-text-label">Holding Period (years)</span>
             <span class="input-text-prefix"></span>
-            <input type="text" class="form-control" />
+            <input type="number" class="form-control" />
           </div>
 
           <button class="button">Calculate</button>
@@ -214,8 +220,53 @@ export default Vue.extend({
       },
     ],
 
+    calcMainInfo: {
+      title: 'Alabama',
+      country: 'Chilton',
+      geoId: '01021060102',
+      rows: [
+        {
+          text: 'Urbanised / Total Population',
+          value: '0/6303',
+        },
+        {
+          text: 'Number of people with college degree or higher',
+          value: '276',
+        },
+        {
+          text:
+            'People aged 25 or older with bachelor’s Degree' +
+            'Master’s degree, Professional school degree, doctorate degree, divided by the total number of people aged 25 or older in a tract (%)',
+          value: '276',
+        },
+        {
+          text: 'Number of people with college degree or higher',
+          value: '276',
+        },
+      ],
+    },
+
+    calcSideBarInfo: {
+      country: 'Chilton',
+      geoId: '01021060102',
+      rows: [
+        {
+          value: '0/6303',
+        },
+        {
+          value: '0/6303',
+        },
+        {
+          value: '0/6303',
+        },
+        {
+          value: '0/6303',
+        },
+      ],
+    },
+
     isCalculated: false,
-    info: false,
+    info: true,
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
