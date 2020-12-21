@@ -3,7 +3,9 @@
     <b-container>
       <b-row align-v="center">
         <b-col cols="12" md="4">
-          <img src="~/assets/images/footer-logo.png" />
+          <nuxt-link to="/">
+            <img src="~/assets/images/footer-logo.png" />
+          </nuxt-link>
         </b-col>
 
         <b-col cols="12" md="4" class="oz-about">

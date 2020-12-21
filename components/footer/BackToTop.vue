@@ -1,10 +1,10 @@
 <template>
   <div class="back-to-top">
     <b-container>
-      <a href="#" class="back-to-top-btn">
+      <button class="back-to-top-btn" @click="scrollToTop">
         <span class="back-to-top-text">Back to top</span>
         <fa :icon="faAngleDoubleUp" />
-      </a>
+      </button>
     </b-container>
   </div>
 </template>
@@ -16,6 +16,11 @@ import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 export default Vue.extend({
   computed: {
     faAngleDoubleUp: () => faAngleDoubleUp,
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 });
 </script>
@@ -37,6 +42,12 @@ export default Vue.extend({
   padding: 5px 10px;
   transition: top 0.3s;
   z-index: -1;
+  border: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
 }
 
 .back-to-top-btn:hover {

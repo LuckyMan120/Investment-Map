@@ -1,0 +1,38 @@
+.slick-news-nav-section-custom-dots {
+  display: flex !important;
+  justify-content: center;
+  list-style-type: none;
+  margin-bottom: 120px;
+  align-items: center;
+  margin-top: 74px;
+
+  & li {
+    font-size: 1.167rem;
+    margin: 0 10px;
+    cursor: pointer;
+    line-height: 1.1;
+    color: $color-grey-7;
+
+    &.slick-active {
+      font-weight: bold;
+    }
+  }
+}
+
+
+.spot-light-next-arrow {
+  height: 45px !important;
+  width: 45px !important;
+  right: -55px !important;
+
+  & svg {
+    color: $color-grey-8;
+    height: 100%;
+    width: 100% !important;
+  }
+
+  &::before {
+    visibility: hidden;
+    font-size: 0 !important;
+  }
+}

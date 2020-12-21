@@ -1,8 +1,15 @@
 @import './components/buttons';
-@import "./base/typography";
+@import './base/typography';
+@import './components/HeroCarousel';
+@import './pages/news';
 
 body {
   font-family: Proxima, sans-serif;
+}
+
+body,
+html {
+  scroll-behavior: smooth;
 }
 
 .blog-slider .slick-list {
@@ -20,7 +27,6 @@ body {
     opacity: 1;
   }
 }
-
 
 // Tab slider transition
 .tr-slide-leave-active,

@@ -39,13 +39,14 @@ export default Vue.extend({
         arrows: false,
         dots: true,
         fade: true,
+        dotsClass: 'slick-hero-custom-dots',
       },
     };
   },
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .slide-img {
   width: 100%;
   height: 400px;

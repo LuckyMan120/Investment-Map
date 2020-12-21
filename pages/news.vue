@@ -8,11 +8,13 @@
           <h2 class="page-into-section-title">
             With latest information on opportunity zones
           </h2>
-          <img
-            src="~assets/icons/arrow-down.png"
-            class="page-into-section-icon"
-            alt="arrow down icon"
-          />
+          <a href="#spot-light">
+            <img
+              src="~assets/icons/arrow-down.png"
+              class="page-into-section-icon"
+              alt="arrow down icon"
+            />
+          </a>
         </div>
       </div>
     </section>
@@ -78,14 +80,8 @@
                 </div>
               </div>
 
-              <template #prevArrow>
-                <div class="arrow prev-arrow">
-                  <fa :icon="faChevronLeft" />
-                </div>
-              </template>
-
               <template #nextArrow>
-                <div class="arrow next-arrow">
+                <div class="arrow next-arrow spot-light-next-arrow">
                   <fa :icon="faChevronRight" />
                 </div>
               </template>
@@ -95,7 +91,7 @@
       </div>
     </section>
 
-    <section class="container-fluid news-section">
+    <section id="spot-light" class="container-fluid news-section">
       <div class="row">
         <div class="col-md-12">
           <SubjectHeader title="Spot Light" />
@@ -130,35 +126,20 @@
                 </div>
               </div>
 
-              <template #prevArrow>
-                <div class="arrow prev-arrow">
-                  <fa :icon="faChevronLeft" />
+              <template #nextArrow>
+                <div class="arrow next-arrow spot-light-next-arrow">
+                  <fa :icon="faChevronRight" />
                 </div>
               </template>
 
-              <template #nextArrow>
-                <div class="arrow next-arrow">
-                  <fa :icon="faChevronRight" />
-                </div>
+              <template #customPaging="page">
+                <div>{{ page + 1 }}</div>
               </template>
             </VueSlickCarousel>
           </div>
         </div>
       </div>
     </section>
-
-    <ul class="nav-section">
-      <fa :icon="faStepBackward" />
-      <li class="nav-section-nav-item">1</li>
-      <li class="nav-section-nav-item">2</li>
-      <li class="nav-section-nav-item">3</li>
-      <li class="nav-section-nav-item">5</li>
-      <li class="nav-section-nav-item">6</li>
-      <li class="nav-section-nav-item">7</li>
-      <li class="nav-section-nav-item">8</li>
-      <li class="nav-section-nav-item">9</li>
-      <fa :icon="faStepForward" />
-    </ul>
   </div>
 </template>
 
@@ -195,6 +176,7 @@ export default Vue.extend({
         slidesToShow: 4,
         infinite: true,
         adaptiveHeight: true,
+        dotsClass: 'slick-news-nav-section-custom-dots',
       },
       carouselItems: [
         {
@@ -258,6 +240,12 @@ export default Vue.extend({
           title: 'Helping local leaders reach the most vulnerable',
           src: 'Bill & Melinda Gates Foundation',
           date: '7 MAY, 2020',
+        },
+        {
+          image: 'dark-side',
+          title: 'The Dark Side Of The Recovery Revealed In Big Data',
+          src: 'NPR - Planet Money',
+          date: 'Oct 9, 2020',
         },
       ],
       spotLightItems: [
@@ -360,7 +348,7 @@ export default Vue.extend({
 }
 
 .spot-light-section {
-  margin-bottom: 150px;
+  margin-bottom: 100px;
 
   .row {
     max-width: 1466px;
@@ -413,6 +401,7 @@ export default Vue.extend({
 
 .news-section {
   margin-bottom: 74px;
+  padding-top: 50px;
 
   .row {
     max-width: 1466px;
@@ -460,29 +449,6 @@ export default Vue.extend({
         color: $color-grey-3;
         font-size: 0.81rem;
       }
-    }
-  }
-}
-
-.nav-section {
-  display: flex;
-  list-style-type: none;
-  margin-bottom: 120px;
-  justify-content: center;
-  align-items: center;
-
-  .nav-section-nav-item {
-    font-size: 1.167rem;
-    margin: 0 10px;
-    cursor: pointer;
-    line-height: 1.1;
-
-    &:first-of-type {
-      margin-left: 30px;
-    }
-
-    &:last-of-type {
-      margin-right: 30px;
     }
   }
 }

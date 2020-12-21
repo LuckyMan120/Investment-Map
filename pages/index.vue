@@ -52,10 +52,18 @@
               </b-col>
 
               <b-col cols="7" class="img-column">
-                <img
-                  src="~/assets/images/home/how-works-thumbnail.png"
-                  alt="How it works video"
-                />
+                <video
+                  ref="howItWorksVideo"
+                  width="100%"
+                  @mouseenter="showVideoControls"
+                  @mouseleave="showVideoControls"
+                  class="how-it-works-video"
+                  :poster="
+                    require('~/assets/images/home/how-works-thumbnail.png')
+                  "
+                >
+                  <source src="~/assets/videos/sample.mp4" type="video/mp4" />
+                </video>
               </b-col>
             </b-row>
           </b-container>
@@ -270,6 +278,17 @@ export default Vue.extend({
       ],
     };
   },
+  methods: {
+    showVideoControls() {
+      // play and pause video
+      const video = this.$refs.howItWorksVideo;
+      if (video.hasAttribute('controls')) {
+        video.removeAttribute('controls');
+      } else {
+        video.setAttribute('controls', 'controls');
+      }
+    },
+  },
 });
 </script>
 
@@ -370,6 +389,10 @@ export default Vue.extend({
       background-color: #2c4574;
     }
   }
+}
+
+.how-it-works-video {
+  object-fit: cover;
 }
 
 .plain-section.intro-section {
