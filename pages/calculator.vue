@@ -31,16 +31,12 @@
         <section class="investment-pre-calc">
           <div class="input-select-container mr-4">
             <span class="input-select-label">State</span>
-            <select class="custom-select">
-              <option selected>Alabama</option>
-            </select>
+            <Select v-model="stateSelect" :select-items="stateSelectItems" />
           </div>
 
           <div class="input-select-container">
             <span class="input-select-label">Sector</span>
-            <select class="custom-select">
-              <option selected>Health Care</option>
-            </select>
+            <Select v-model="sectorSelect" :select-items="sectorSelectItems" />
           </div>
 
           <div class="input-text-container">
@@ -159,9 +155,11 @@
             />
           </button>
           <h2 class="calculator-header-subtitle">Calculator</h2>
-          <select class="calculator-header-select custom-select">
-            <option selected>Alabama</option>
-          </select>
+          <Select
+            class="calculator-header-select"
+            v-model="stateSelect"
+            :select-items="stateSelectItems"
+          />
         </header>
 
         <section class="real-estate-pre-calc">
@@ -203,19 +201,45 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script>
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import CalculatorTabs from '~/components/CalculatorTabs/CalculatorTabs.vue';
-import CalculatorSearch from '~/components/CalculatorSearch/CalculatorSearch.vue';
+import CalculatorTabs from '@/components/CalculatorTabs/CalculatorTabs.vue';
+import CalculatorSearch from '@/components/CalculatorSearch/CalculatorSearch.vue';
+import Select from '@/components/Select/Select.vue';
 
-export default Vue.extend({
+export default {
   layout: 'calculator',
   components: {
     CalculatorTabs,
     CalculatorSearch,
+    Select,
   },
   data: () => ({
+    // State select
+    stateSelect: 'alabama',
+    stateSelectItems: [
+      {
+        text: 'Alabama',
+        value: 'alabama',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+    ],
+    // Health care select
+    sectorSelect: 'health-care',
+    sectorSelectItems: [
+      {
+        text: 'Health Care',
+        value: 'health-care',
+      },
+      {
+        text: 'Education',
+        value: 'education',
+      },
+    ],
+
     // Tabs
     activeTab: '',
     tabs: [
@@ -275,7 +299,7 @@ export default Vue.extend({
     },
 
     isCalculated: false,
-    info: true,
+    info: false,
 
     // search
     searchInput: '',
@@ -296,7 +320,7 @@ export default Vue.extend({
       titleTemplate: '%s - Calculator',
     };
   },
-});
+};
 </script>
 
 <style scoped lang="scss">
@@ -361,8 +385,9 @@ export default Vue.extend({
     border-radius: 500px;
     font-size: 0.7rem;
     align-self: stretch;
-    padding: 5px 17px;
+    padding: 0 17px;
     flex: 1 0 170px;
+    margin: 0;
   }
 }
 

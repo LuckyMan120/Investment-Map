@@ -162,13 +162,15 @@ export default Vue.extend({
     }
   },
   mounted() {
-    // get heights of the each main info rows
-    // @ts-ignore: Unreachable code error
-    this.$refs.mainInfoRow.forEach((row) => {
-      // get element height and save
+    if (this.info) {
+      // get heights of the each main info rows
       // @ts-ignore: Unreachable code error
-      this.mainInfoHeights.push(row.getBoundingClientRect().height);
-    });
+      this.$refs.mainInfoRow.forEach((row) => {
+        // get element height and save
+        // @ts-ignore: Unreachable code error
+        this.mainInfoHeights.push(row.getBoundingClientRect().height);
+      });
+    }
   },
   methods: {
     setSelectedTab(i: any) {

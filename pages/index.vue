@@ -282,9 +282,12 @@ export default Vue.extend({
     showVideoControls() {
       // play and pause video
       const video = this.$refs.howItWorksVideo;
+      // @ts-ignore: Unreachable code error
       if (video.hasAttribute('controls')) {
+        // @ts-ignore: Unreachable code error
         video.removeAttribute('controls');
       } else {
+        // @ts-ignore: Unreachable code error
         video.setAttribute('controls', 'controls');
       }
     },
