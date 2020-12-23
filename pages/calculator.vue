@@ -1,5 +1,14 @@
 <template>
   <div class="calculator-page">
+    <!-- google map -->
+    <GmapMap
+      :center="center"
+      :zoom="zoom"
+      map-type-id="roadmap"
+      style="width: 100%"
+      class="calculator-page"
+      :options="mapStyle"
+    ></GmapMap>
     <!--Tabs-->
     <CalculatorTabs
       v-model="activeTab"
@@ -206,6 +215,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import CalculatorTabs from '@/components/CalculatorTabs/CalculatorTabs.vue';
 import CalculatorSearch from '@/components/CalculatorSearch/CalculatorSearch.vue';
 import Select from '@/components/Select/Select.vue';
+import mapStyle from '@/static/data/mapStyle.json';
 
 export default {
   layout: 'calculator',
@@ -311,6 +321,9 @@ export default {
         text: 'Alabama',
       },
     ],
+    center: { lat: 37.09024, lng: -95.712891 },
+    zoom: 4,
+    mapStyle,
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
@@ -328,8 +341,7 @@ export default {
   height: calc(100vh - 78px);
   width: 100%;
   background-color: $color-grey-3;
-  background-image: url('~assets/images/calculator/bg.png');
-  background-size: cover;
+  //background-size: cover;
 }
 
 .calculator-tabs {
