@@ -101,39 +101,8 @@
             </div>
           </div>
 
-          <div class="investment-result-chart-container">
-            <div class="investment-result-chart">
-              <div
-                class="investment-result-chart-bar investment-result-chart-bar-with-oz"
-              >
-                $ 477.8 k
-              </div>
-              <div class="investment-result-chart-text">
-                <span class="investment-result-chart-title">With OZ</span>
-                <span class="investment-result-chart-subtitle">After Tax</span>
-              </div>
-            </div>
-
-            <div class="investment-result-chart">
-              <div
-                class="investment-result-chart-bar investment-result-chart-bar-without-oz"
-              >
-                $ 398.3 k
-              </div>
-              <div class="investment-result-chart-text">
-                <span class="investment-result-chart-title">Without OZ</span>
-                <span class="investment-result-chart-subtitle">After Tax</span>
-              </div>
-            </div>
-
-            <div class="investment-result-chart">
-              <div
-                class="investment-result-chart-bar investment-result-chart-bar-diff"
-              >
-                $ 53 k
-              </div>
-            </div>
-          </div>
+          <!--Calculator chart-->
+          <CalculatorChart :items="calculatorCartItems" />
 
           <div class="row mt-4">
             <div class="col-md-6 d-flex justify-content-end">
@@ -215,6 +184,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import CalculatorTabs from '@/components/CalculatorTabs/CalculatorTabs.vue';
 import CalculatorSearch from '@/components/CalculatorSearch/CalculatorSearch.vue';
 import Select from '@/components/Select/Select.vue';
+import CalculatorChart from '@/components/CalculatorChart/CalculatorChart.vue';
 import mapStyle from '@/static/data/mapStyle.json';
 
 export default {
@@ -223,6 +193,7 @@ export default {
     CalculatorTabs,
     CalculatorSearch,
     Select,
+    CalculatorChart,
   },
   data: () => ({
     // State select
@@ -324,6 +295,28 @@ export default {
     center: { lat: 37.09024, lng: -95.712891 },
     zoom: 4,
     mapStyle,
+
+    // calculator chart
+    calculatorCartItems: [
+      {
+        title: 'With OZ',
+        subtitle: 'After Tax',
+        value: '$ 398.3 k',
+        progress: 90,
+      },
+      {
+        title: 'Without OZ',
+        subtitle: 'After Tax',
+        value: '$ 398.3 k',
+        progress: 60,
+      },
+      {
+        title: '',
+        subtitle: '',
+        value: '$ 398.3 k',
+        progress: 30,
+      },
+    ],
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
@@ -510,67 +503,6 @@ export default {
 
   .investment-result-statics-row {
     display: flex;
-  }
-}
-
-.investment-result-chart-container {
-  margin-top: 20px;
-  background-color: $color-grey-6;
-  padding: 14px 0;
-  border-left: 1px solid $color-blue-5;
-
-  .investment-result-chart {
-    display: flex;
-    align-items: center;
-  }
-
-  .investment-result-chart-bar {
-    background: linear-gradient(to right, $color-blue-6, $color-blue-3);
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: $color-white;
-    line-height: 1.1;
-    align-items: center;
-    padding: 12px;
-    border-radius: 0 100px 100px 0;
-    margin-right: 11px;
-    text-align: right;
-    margin-bottom: 7px;
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-  }
-
-  // with oz bar
-  .investment-result-chart-bar-with-oz {
-    width: 70%;
-  }
-
-  // without oz bar
-  .investment-result-chart-bar-without-oz {
-    width: 40%;
-  }
-
-  // diff bar
-  .investment-result-chart-bar-diff {
-    width: 20%;
-  }
-
-  .investment-result-chart-text {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .investment-result-chart-title {
-    color: $color-blue-3;
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-
-  .investment-result-chart-subtitle {
-    font-size: 0.65rem;
-    color: $color-blue-6;
   }
 }
 
