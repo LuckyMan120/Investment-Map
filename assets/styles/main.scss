@@ -12,6 +12,10 @@ html {
   scroll-behavior: smooth;
 }
 
+button:focus {
+  outline: none;
+}
+
 .blog-slider .slick-list {
   margin-left: -20px;
   margin-right: -20px;

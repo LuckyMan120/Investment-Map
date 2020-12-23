@@ -22,6 +22,7 @@ export default {
     { src: '~/plugins/vue-slick-carousel.js' },
     { src: '~/plugins/directives.js' },
     { src: '~/plugins/vue2-google-maps', ssr: true },
+    { src: '~/plugins/vue2-perfect-scrollbar.js' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

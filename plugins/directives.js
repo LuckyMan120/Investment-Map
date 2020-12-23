@@ -7,7 +7,10 @@ Vue.directive('select-click-outside', {
         !(
           el === event.target ||
           el.contains(event.target) ||
-          event.target.classList.contains('select-item')
+          event.target.classList.contains('select-item') ||
+          event.target.classList.contains('select-items') ||
+          event.target.classList.contains('ps__thumb-y') ||
+          event.target.classList.contains('select-items-container')
         )
       ) {
         if (binding.value instanceof Function) {

@@ -44,9 +44,11 @@
 
         <ArrowDropDown class="selected-item-icon" />
       </span>
-      <ul
+      <perfect-scrollbar
+        tag="ul"
         class="select-items"
         :class="{ 'select-items--active': isInputFocused }"
+        :options="scrollbarOptions"
       >
         <li
           class="select-item"
@@ -56,7 +58,7 @@
         >
           {{ item.text }}
         </li>
-      </ul>
+      </perfect-scrollbar>
     </nav>
   </div>
 </template>
@@ -92,6 +94,10 @@ export default {
 
     localSelectModel: '',
     localSelectItems: [],
+
+    scrollbarOptions: {
+      maxScrollbarLength: 30,
+    },
   }),
 
   mounted() {
@@ -174,7 +180,7 @@ export default {
 .input-section {
   border: 1px solid $color-grey-3;
   position: relative;
-  padding: 3px 15px 3px 20px;
+  padding: 3px 13px 3px 20px;
   border-radius: 100px;
   display: flex;
   align-items: center;
@@ -250,7 +256,7 @@ export default {
 .select-items-container {
   z-index: 12;
   background-color: #fff;
-  padding: 7px 20px;
+  padding: 7px 15px 7px 20px;
   border: 1px solid $color-grey-3;
   border-radius: 16px;
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
@@ -272,23 +278,8 @@ export default {
   flex-direction: column;
   padding: 0;
   margin: 0;
-  overflow-y: auto;
+  overflow: hidden;
   max-height: 250px;
-
-  &::-webkit-scrollbar {
-    width: 3px;
-    background-color: $color-grey-6;
-  }
-
-  &::-webkit-scrollbar-track {
-    border-radius: 3px;
-    background-color: $color-grey-6;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: $color-grey-5;
-  }
 }
 
 .select-item {
@@ -322,6 +313,7 @@ export default {
     width: auto;
     transform: translateX(40%);
     margin-top: 5px;
+    margin-right: 2px;
   }
 }
 

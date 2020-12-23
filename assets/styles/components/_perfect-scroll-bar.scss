@@ -1,0 +1,18 @@
+.ps__rail-y {
+  opacity: 0.6 !important;
+  background-color: $color-grey-5 !important;
+  width: 1px;
+  right: 3px;
+
+  &:hover .ps__thumb-y {
+    width: 6px !important;
+  }
+
+  & .ps__thumb-y {
+    transform: translateX(4px) !important;
+
+    &:hover {
+      width: 6px !important;
+    }
+  }
+}

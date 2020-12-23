@@ -102,7 +102,10 @@
           </div>
 
           <!--Calculator chart-->
-          <CalculatorChart :items="calculatorCartItems" />
+          <CalculatorChart
+            :items="calculatorChartItems"
+            :ranges="calculatorChartRange"
+          />
 
           <div class="row mt-4">
             <div class="col-md-6 d-flex justify-content-end">
@@ -207,6 +210,74 @@ export default {
         text: 'Miami',
         value: 'miami',
       },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
+      {
+        text: 'Miami',
+        value: 'miami',
+      },
     ],
     // Health care select
     sectorSelect: 'health-care',
@@ -279,7 +350,7 @@ export default {
       ],
     },
 
-    isCalculated: false,
+    isCalculated: true,
     info: false,
 
     // search
@@ -297,26 +368,28 @@ export default {
     mapStyle,
 
     // calculator chart
-    calculatorCartItems: [
+    calculatorChartItems: [
       {
         title: 'With OZ',
         subtitle: 'After Tax',
-        value: '$ 398.3 k',
-        progress: 90,
+        value: '$ 400 k',
+        progress: 100, // in percent
       },
       {
         title: 'Without OZ',
         subtitle: 'After Tax',
-        value: '$ 398.3 k',
+        value: '$ 240 k',
         progress: 60,
       },
       {
         title: '',
         subtitle: '',
-        value: '$ 398.3 k',
+        value: '$ 110 k',
         progress: 30,
       },
     ],
+
+    calculatorChartRange: ['100k', '200k', '300k', '400k'],
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,

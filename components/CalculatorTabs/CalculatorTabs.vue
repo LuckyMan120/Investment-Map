@@ -16,7 +16,15 @@
       </ul>
 
       <!--Cards-->
-      <transition-group name="tr-slide" mode="out-in" tag="div" class="card">
+      <transition-group
+        name="tr-slide"
+        mode="out-in"
+        tag="div"
+        class="card"
+        :class="{ 'hide-card-overflow': isTransitioning }"
+        @before-leave="isTransitioning = true"
+        @after-enter="isTransitioning = false"
+      >
         <slot></slot>
         <!--
           slots should be passed as an html element(div is preferred) with the following format:
@@ -150,6 +158,7 @@ export default Vue.extend({
   data: () => ({
     mainInfoHeights: [],
     isSideBarShown: true,
+    isTransitioning: false,
   }),
   created() {
     // Update v-model tab to the first passed tab if v-model value is not valid
@@ -227,8 +236,12 @@ export default Vue.extend({
   min-width: 300px;
   min-height: 400px;
   max-height: calc(100vh - 140px);
-  overflow: auto;
+  overflow-y: auto;
   overflow-x: hidden;
+}
+
+.hide-card-overflow {
+  overflow: hidden;
 }
 
 // info shell

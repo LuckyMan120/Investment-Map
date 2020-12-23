@@ -102,7 +102,7 @@
               class="news-section-slider"
             >
               <div
-                v-for="(slide, i) in featuredItems"
+                v-for="(slide, i) in newsItems"
                 :key="i"
                 class="news-section-slide"
               >
@@ -241,11 +241,38 @@ export default Vue.extend({
           src: 'Bill & Melinda Gates Foundation',
           date: '7 MAY, 2020',
         },
+      ],
+      newsItems: [
+        {
+          image: 'phoenix',
+          title:
+            'Phoenix developer begins $111M redevelopment of former cement plant',
+          src: 'Phoenix Business Journal',
+          date: 'Nov 9, 2020',
+        },
+        {
+          image: 'social-program',
+          title: 'Social Programs Can Sometimes Turn a Profit for Taxpayers',
+          src: 'The New York Times',
+          date: 'July 10, 2020',
+        },
         {
           image: 'dark-side',
           title: 'The Dark Side Of The Recovery Revealed In Big Data',
           src: 'NPR - Planet Money',
           date: 'Oct 9, 2020',
+        },
+        {
+          image: 'helping',
+          title: 'Helping local leaders reach the most vulnerable',
+          src: 'Bill & Melinda Gates Foundation',
+          date: '7 MAY, 2020',
+        },
+        {
+          image: 'helping',
+          title: 'Helping local leaders reach the most vulnerable',
+          src: 'Bill & Melinda Gates Foundation',
+          date: '7 MAY, 2020',
         },
       ],
       spotLightItems: [
