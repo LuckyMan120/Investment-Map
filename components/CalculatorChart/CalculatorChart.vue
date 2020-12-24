@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     calcWidth(progress) {
-      const MAX_PROGRESS = 403; // px
+      const MAX_PROGRESS = 450; // px
       return `${(progress / 100) * MAX_PROGRESS}px`;
     },
   },

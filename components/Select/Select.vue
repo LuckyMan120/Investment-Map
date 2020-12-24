@@ -10,7 +10,7 @@
         <!-- Selected item -->
         <div class="input-selected-container">
           <div class="input-selected">
-            {{ localSelectModel.text }}
+            {{ localSelectModel }}
           </div>
         </div>
       </div>
@@ -37,10 +37,10 @@
       :class="{ 'select-items-container--active': isInputFocused }"
     >
       <span
-        v-if="isItemSelected(localSelectModel.value)"
+        v-if="isItemSelected(localSelectModel)"
         class="selected-item selected-item--active"
       >
-        {{ localSelectModel.text }}
+        {{ localSelectModel }}
 
         <ArrowDropDown class="selected-item-icon" />
       </span>
@@ -56,7 +56,7 @@
           v-for="(item, i) in localSelectItems"
           :key="i"
         >
-          {{ item.text }}
+          {{ item }}
         </li>
       </perfect-scrollbar>
     </nav>
@@ -103,7 +103,7 @@ export default {
   mounted() {
     if (this.modelValue.length > 0) {
       this.localSelectModel = this.selectItems.find(
-        (item) => item.value === this.modelValue
+        (item) => item === this.modelValue
       );
     }
 
@@ -142,7 +142,7 @@ export default {
     filterLocalSelectItems() {
       this.localSelectItems.splice(
         this.localSelectItems.findIndex(
-          (item) => item.value === this.localSelectModel.value
+          (item) => item === this.localSelectModel
         ),
         1
       );
@@ -157,7 +157,7 @@ export default {
       this.handleInputBlur();
 
       // Update parent model
-      this.$emit('update:modelValue', this.localSelectModel.value);
+      this.$emit('update:modelValue', this.localSelectModel);
     },
     isItemSelected(val) {
       return this.modelValue === val;
@@ -221,6 +221,7 @@ export default {
   font-size: 13px;
   font-weight: 500;
   font-family: inherit;
+  white-space: nowrap;
 }
 
 .label {

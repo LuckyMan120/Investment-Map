@@ -6,14 +6,19 @@
       <div class="search-input">
         <button class="search-btn">Search</button>
         <div class="input-container">
-          <input
+          <gmap-autocomplete
+            @place_changed="setFromtownPlace"
+            :options="options"
+            class="input"
+          ></gmap-autocomplete>
+          <!-- <input
             type="text"
             class="input"
             @input="
               $emit('update:modelValue', $event.target.value);
               $emit('input', $event.target.value);
             "
-          />
+          /> -->
           <img
             src="~assets/icons/magnify-icon.png"
             class="input-icon"
@@ -44,10 +49,10 @@
   </section>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script>
+import states from '@/static/data/states.json';
 
-export default Vue.extend({
+export default {
   model: {
     prop: 'modelValue',
     event: 'update:modelValue',
@@ -60,7 +65,27 @@ export default Vue.extend({
 
     results: Array,
   },
-});
+  data() {
+    return {
+      options: {
+        componentRestrictions: { country: 'US' },
+      },
+      allStates: states.states,
+    };
+  },
+  methods: {
+    setFromtownPlace: function (place) {
+      place.address_components.forEach((item) => {
+        this.allStates.forEach((state) => {
+          if (item['long_name'] === state) {
+            this.$emit('update:modelValue', state);
+            return;
+          }
+        });
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

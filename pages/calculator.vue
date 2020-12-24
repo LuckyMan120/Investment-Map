@@ -8,7 +8,21 @@
       style="width: 100%"
       class="calculator-page"
       :options="mapStyle"
-    ></GmapMap>
+    >
+      <gmap-polygon
+        v-for="(polygon, count) in selectState"
+        :key="count"
+        :path.sync="polygon.path"
+        :options="{
+          strokeColor: '#00bcf0',
+          fillColor: '#00bcf0b8',
+          fillOpacity: 0.1,
+          clickable: true,
+        }"
+        @click="showDetails(polygon)"
+      >
+      </gmap-polygon>
+    </GmapMap>
     <!--Tabs-->
     <CalculatorTabs
       v-model="activeTab"
@@ -109,7 +123,7 @@
 
           <div class="row mt-4">
             <div class="col-md-6 d-flex justify-content-end">
-              <button @click="isCalculated = false" class="button button-grey">
+              <button class="button button-grey" @click="isCalculated = false">
                 <fa class="mr-2" :icon="faChevronLeft" /> Back
               </button>
             </div>
@@ -137,8 +151,8 @@
           </button>
           <h2 class="calculator-header-subtitle">Calculator</h2>
           <Select
-            class="calculator-header-select"
             v-model="stateSelect"
+            class="calculator-header-select"
             :select-items="stateSelectItems"
           />
         </header>
@@ -179,6 +193,9 @@
       :results="resultItems"
       class="calculator-search"
     />
+
+    <!--Loader-->
+    <Loading v-model="loading" />
   </div>
 </template>
 
@@ -188,7 +205,10 @@ import CalculatorTabs from '@/components/CalculatorTabs/CalculatorTabs.vue';
 import CalculatorSearch from '@/components/CalculatorSearch/CalculatorSearch.vue';
 import Select from '@/components/Select/Select.vue';
 import CalculatorChart from '@/components/CalculatorChart/CalculatorChart.vue';
+import Loading from '@/components/Loading/Loading.vue';
 import mapStyle from '@/static/data/mapStyle.json';
+import states from '@/static/data/states.json';
+import sectors from '@/static/data/sector.json';
 
 export default {
   layout: 'calculator',
@@ -197,100 +217,16 @@ export default {
     CalculatorSearch,
     Select,
     CalculatorChart,
+    Loading,
   },
   data: () => ({
+    loading: true,
     // State select
-    stateSelect: 'alabama',
-    stateSelectItems: [
-      {
-        text: 'Alabama',
-        value: 'alabama',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-      {
-        text: 'Miami',
-        value: 'miami',
-      },
-    ],
+    stateSelect: 'Alabama',
+    stateSelectItems: states.states,
     // Health care select
-    sectorSelect: 'health-care',
-    sectorSelectItems: [
-      {
-        text: 'Health Care',
-        value: 'health-care',
-      },
-      {
-        text: 'Education',
-        value: 'education',
-      },
-    ],
+    sectorSelect: 'Retailing',
+    sectorSelectItems: sectors.sectors,
 
     // Tabs
     activeTab: '',
@@ -390,9 +326,23 @@ export default {
     ],
 
     calculatorChartRange: ['100k', '200k', '300k', '400k'],
+    selectState: null,
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
+  },
+  watch: {
+    async searchInput() {
+      const data = {};
+      data.name = this.searchInput;
+      const polygons = await this.$axios.post('/earth/search', data);
+      this.selectState = polygons.data;
+    },
+  },
+  methods: {
+    showDetails(polygon) {
+      console.log('polygon', polygon);
+    },
   },
   head() {
     return {
@@ -416,8 +366,9 @@ export default {
   top: calc(50px + 78px);
 }
 
-.investment-tab {
-  //min-width: 500px;
+.investment-tab,
+.real-estate-tab {
+  width: 560px;
 }
 
 .calculator-header {

@@ -47,7 +47,12 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/style-resources',
     'nuxt-svg-loader',
+    '@nuxtjs/axios',
   ],
+
+  axios: {
+    baseURL: 'http://localhost:4000',
+  },
 
   styleResources: {
     scss: ['~/assets/styles/abstracts/*.scss'],

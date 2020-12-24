@@ -161,6 +161,8 @@ export default Vue.extend({
     isTransitioning: false,
   }),
   created() {
+    console.log('created', this.tabs);
+    console.log('modelValue', this.modelValue);
     // Update v-model tab to the first passed tab if v-model value is not valid
     if (this.tabs?.length > 0) {
       // @ts-ignore: Unreachable code error
