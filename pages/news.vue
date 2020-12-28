@@ -100,6 +100,7 @@
             <VueSlickCarousel
               v-bind="newsSliderOptions"
               class="news-section-slider"
+              ref="newsCarousel"
             >
               <div
                 v-for="(slide, i) in newsItems"
@@ -291,6 +292,10 @@ export default Vue.extend({
           date: 'Nov 9, 2020',
         },
       ],
+
+      // news
+      newsNavNextBtn: null,
+      newsNavPrevBtn: null,
     };
   },
 
@@ -299,6 +304,52 @@ export default Vue.extend({
     faChevronLeft: () => faChevronLeft,
     faStepForward: () => faStepForward,
     faStepBackward: () => faStepBackward,
+  },
+
+  mounted() {
+    // add custome spot light next and prev buttons
+    const dotsContinaer = document.querySelector(
+      '.slick-news-nav-section-custom-dots'
+    );
+
+    dotsContinaer.insertAdjacentHTML(
+      'afterbegin',
+      `<img class="news-section__page-nav" id="news-section-prev-btn" src="${require('~/assets/icons/icon-chervon-left.png')}" alt="back icon" draggable="false" />`
+    );
+
+    dotsContinaer.insertAdjacentHTML(
+      'beforeend',
+      `<img class="news-section__page-nav" id="news-section-next-btn" src="${require('~/assets/icons/icon-chervon-right.png')}" alt="next icon" draggable="false" />`
+    );
+
+    // select and save elements
+    this.newsNavNextBtn = document.querySelector('#news-section-next-btn');
+    this.newsNavPrevBtn = document.querySelector('#news-section-prev-btn');
+
+    // add event listeners
+    this.newsNavNextBtn.addEventListener('click', this.handleNextNewsCarousel);
+    this.newsNavPrevBtn.addEventListener('click', this.handlePrevNewsCarousel);
+  },
+
+  destroyed() {
+    // remove news carousel event listeners
+    this.newsNavNextBtn.removeEventListener(
+      'click',
+      this.handleNextNewsCarousel
+    );
+    this.newsNavPrevBtn.removeEventListener(
+      'click',
+      this.handlePrevNewsCarousel
+    );
+  },
+
+  methods: {
+    handleNextNewsCarousel() {
+      this.$refs.newsCarousel.next();
+    },
+    handlePrevNewsCarousel() {
+      this.$refs.newsCarousel.prev();
+    },
   },
 
   head() {

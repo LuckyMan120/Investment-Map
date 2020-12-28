@@ -58,6 +58,14 @@ button:focus {
   top: -115px !important;
 }
 
+// News page - news section
+.news-section__page-nav {
+  cursor: pointer;
+  height: 16px;
+  width: auto;
+  margin: 0 25px
+}
+
 /* disable the below small triangle/anchor */
 .gm-style .gm-style-iw-t::after {
   display: none !important;
