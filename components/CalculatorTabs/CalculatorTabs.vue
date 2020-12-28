@@ -54,11 +54,13 @@
       <div v-if="mainInfo" class="card main-info-card">
         <div class="info-content-container">
           <header class="main-info-header">
-            <h2 class="main-header-info-title">{{ mainInfo.title }}</h2>
+            <h2 class="main-header-info-title">
+              {{ mainInfo.data.statename }}
+            </h2>
             <div class="info-header">
               <span class="info-header-title">County</span>
               <span class="info-header-title-value">{{
-                mainInfo.country
+                mainInfo.countyName
               }}</span>
               <span class="info-header-subtitle">GEO ID</span>
               <span class="info-header-subtitle-value">{{
@@ -68,16 +70,99 @@
           </header>
 
           <div class="info-content">
-            <span
-              v-for="(row, i) in mainInfo.rows"
-              :key="i"
-              class="info-content-row"
-              ref="mainInfoRow"
-            >
+            <span class="info-content-row" ref="mainInfoRow">
               <span class="info-content-row-text">
-                {{ row.text }}
+                Uranized / Total Population
               </span>
-              <span class="info-content-row-value">{{ row.value }}</span>
+              <span class="info-content-row-value">{{
+                mainInfo.data.population
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                Number of pelple with college degree or higher / total
+                population
+              </span>
+              <span class="info-content-row-value">{{
+                mainInfo.data.degree
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                Single family unit housing structures (%)
+              </span>
+              <span class="info-content-row-value">{{
+                mainInfo.data.single
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                2-9 Unit housing structures (%)
+              </span>
+              <span class="info-content-row-value">{{
+                mainInfo.data.medium
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                10 or more unit housing structures (%)
+              </span>
+              <span class="info-content-row-value">{{
+                mainInfo.data.expand
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                Median household income
+              </span>
+              <span class="info-content-row-value">{{
+                mainInfo.data.income
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                Number of people aged 25 or older who have a bachelor's
+                degree,<br />master's degree, professional school degree, or
+                doctorate degree, divided by the total number of people aged 25
+                or older in a tract (%)
+              </span>
+              <span class="info-content-row-value">{{
+                parseFloat(mainInfo.data.degrees * 100).toFixed(2)
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                The median gross rent for renter-occupied housing units with two
+                bedrooms that pay cash rent (from the 2011-2015 ACS)
+              </span>
+              <span class="info-content-row-value">{{
+                mainInfo.data.house_count
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                Average annualized job growth rate over the time period 2004 to
+                2013 (%)
+              </span>
+              <span class="info-content-row-value">{{
+                parseFloat(mainInfo.data.job_growth_rate * 100).toFixed(2)
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                Number of jobs per square mile in each tract
+              </span>
+              <span class="info-content-row-value">{{
+                parseFloat(mainInfo.data.per_square_job).toFixed()
+              }}</span>
+            </span>
+            <span class="info-content-row" ref="mainInfoRow">
+              <span class="info-content-row-text">
+                Number of residents per square mile
+              </span>
+              <span class="info-content-row-value">{{
+                parseFloat(mainInfo.data.residents_count).toFixed()
+              }}</span>
             </span>
           </div>
         </div>
@@ -85,11 +170,11 @@
 
       <!--Side bar info-->
       <div
-        v-if="sidebarInfo"
+        v-if="sideInfo"
         v-show="isSideBarShown"
         class="card side-bar-info-card"
       >
-        <button @click="isSideBarShown = false" class="card-close-btn">
+        <button @click="close" class="card-close-btn">
           <img
             class="card-close-btn-icon"
             src="~assets/icons/icon-close.png"
@@ -101,22 +186,57 @@
           <header class="info-header">
             <span class="info-header-title">County</span>
             <span class="info-header-title-value">{{
-              sidebarInfo.country
+              sideInfo.countyname
             }}</span>
             <span class="info-header-subtitle">GEO ID</span>
-            <span class="info-header-subtitle-value">{{
-              sidebarInfo.geoId
-            }}</span>
+            <span class="info-header-subtitle-value">{{ sideInfo.geoid }}</span>
           </header>
 
           <div class="info-content">
-            <span
-              v-for="(row, i) in sidebarInfo.rows"
-              :key="i"
-              class="info-content-row side-bar-content-row"
-              :style="{ minHeight: `${mainInfoHeights[i]}px` }"
-            >
-              <span class="info-content-row-value">{{ row.value }}</span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{
+                sideInfo.population
+              }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{ sideInfo.degree }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{ sideInfo.single }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{ sideInfo.medium }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{ sideInfo.expand }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{ sideInfo.income }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{
+                parseFloat(sideInfo.degrees * 100).toFixed(2)
+              }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{
+                sideInfo.house_count
+              }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{
+                parseFloat(sideInfo.job_growth_rate * 100).toFixed(2)
+              }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{
+                parseFloat(sideInfo.per_square_job).toFixed()
+              }}</span>
+            </span>
+            <span class="info-content-row side-bar-content-row">
+              <span class="info-content-row-value">{{
+                parseFloat(sideInfo.residents_count).toFixed()
+              }}</span>
             </span>
           </div>
         </div>
@@ -154,15 +274,15 @@ export default Vue.extend({
     info: Boolean,
     mainInfo: Object || null,
     sidebarInfo: Object || null,
+    changeStatus: Boolean,
   },
   data: () => ({
     mainInfoHeights: [],
-    isSideBarShown: true,
+    isSideBarShown: false,
     isTransitioning: false,
+    sideInfo: null,
   }),
   created() {
-    console.log('created', this.tabs);
-    console.log('modelValue', this.modelValue);
     // Update v-model tab to the first passed tab if v-model value is not valid
     if (this.tabs?.length > 0) {
       // @ts-ignore: Unreachable code error
@@ -187,6 +307,19 @@ export default Vue.extend({
     setSelectedTab(i: any) {
       // @ts-ignore: Unreachable code error
       this.$emit('update:modelValue', this.tabs[i].name);
+    },
+    close: function () {
+      this.isSideBarShown = false;
+      this.sideInfo = null;
+    },
+  },
+  watch: {
+    changeStatus: function () {
+      this.sideInfo = this.sidebarInfo;
+      this.isSideBarShown = true;
+    },
+    info: function () {
+      this.isSideBarShown = false;
     },
   },
 });
@@ -404,7 +537,7 @@ export default Vue.extend({
       display: grid;
       grid-template-columns: repeat(2, auto);
       grid-template-rows: repeat(2, auto);
-      max-width: 126px;
+      max-width: 150px;
     }
   }
 }

@@ -11,14 +11,6 @@
             :options="options"
             class="input"
           ></gmap-autocomplete>
-          <!-- <input
-            type="text"
-            class="input"
-            @input="
-              $emit('update:modelValue', $event.target.value);
-              $emit('input', $event.target.value);
-            "
-          /> -->
           <img
             src="~assets/icons/magnify-icon.png"
             class="input-icon"
@@ -27,18 +19,20 @@
         </div>
       </div>
       <!--Add btn-->
-      <button class="add-btn">
+      <!-- <button class="add-btn">
         <img
           class="add-btn-icon"
           src="~assets/icons/icon-plus.png"
           alt="plus-icon"
         />
-      </button>
+      </button> -->
     </div>
     <!--Results-->
     <div v-for="(result, i) in results" :key="i" class="result-container">
-      <span class="result-text">{{ result.text }}</span>
-      <button class="result-btn">
+      <span class="result-text" @click="comparePolygon(i)">{{
+        result.countyname
+      }}</span>
+      <button class="result-btn" @click="removePolygon(i)">
         <img
           class="result-btn-icon"
           src="~assets/icons/icon-minus.png"
@@ -53,16 +47,7 @@
 import states from '@/static/data/states.json';
 
 export default {
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue',
-  },
   props: {
-    modelValue: {
-      type: String || Number, // Model value
-      required: true,
-    },
-
     results: Array,
   },
   data() {
@@ -78,11 +63,23 @@ export default {
       place.address_components.forEach((item) => {
         this.allStates.forEach((state) => {
           if (item['long_name'] === state) {
-            this.$emit('update:modelValue', state);
+            let searchData = {};
+            searchData['name'] = state;
+            searchData['center'] = {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+            };
+            this.$emit('search', searchData);
             return;
           }
         });
       });
+    },
+    comparePolygon: function (index) {
+      this.$emit('comparePolygon', index);
+    },
+    removePolygon: function (index) {
+      this.$emit('removePolygon', index);
     },
   },
 };
@@ -169,7 +166,11 @@ export default {
   margin-left: 111px;
   margin-top: 5px;
   background-color: $color-white;
-  cursor: pointer;
+
+  .result-text {
+    cursor: pointer;
+    min-width: 350px;
+  }
 }
 
 .result-btn {

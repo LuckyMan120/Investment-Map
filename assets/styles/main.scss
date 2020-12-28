@@ -53,3 +53,18 @@ button:focus {
 .tr-slide-leave-to {
   transform: translateX(100%);
 }
+.gm-style .gm-style-iw-c {
+  border-radius: 5px !important;
+  top: -115px !important;
+}
+
+/* disable the below small triangle/anchor */
+.gm-style .gm-style-iw-t::after {
+  display: none !important;
+}
+// .gm-style-iw button {
+//   display: none !important;
+// }
+.gm-ui-hover-effect {
+  display: none !important;
+}

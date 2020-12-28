@@ -175,6 +175,10 @@ export default {
   z-index: 10;
   position: relative;
   width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .input-section {
