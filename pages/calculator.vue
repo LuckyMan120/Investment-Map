@@ -29,28 +29,23 @@
         :opened="compare_one_window_open"
         :position="compare_one_Infowindow"
       >
-        <div>
+        <div class="location-popup">
           <div class="infowindow-board">
-            <div>
-              <span>{{ compareOnePolygon.countyName }}</span
-              ><br />
-              <span>{{ compareOnePolygon.geoId }}</span>
+            <div class="infowindow-board__info">
+              <span class="infowindow-board__info__name">{{
+                compareOnePolygon.countyName
+              }}</span>
+              <span class="infowindow-board__info__geo-id">{{
+                compareOnePolygon.geoId
+              }}</span>
             </div>
-            <h2>1</h2>
+            <h2 class="infowindow-board__order">1</h2>
           </div>
-          <button
-            style="
-              color: #2275c3;
-              font-size: 12px;
-              display: block !important;
-              border: none !important;
-              background: unset;
-              padding: unset;
-            "
-            @click="compare"
-          >
-            COMPARE
-          </button>
+          <div class="location-popup__actions">
+            <button class="location-popup__actions__compare" @click="compare">
+              COMPARE
+            </button>
+          </div>
         </div>
       </gmap-info-window>
       <GmapMarker
@@ -64,47 +59,36 @@
         :opened="compare_two_window_open"
         :position="compare_two_Infowindow"
       >
-        <div>
-          <div>
-            <div class="infowindow-board">
-              <div>
-                <span>{{ compareTwoPolygon.countyName }}</span
-                ><br />
-                <span>{{ compareTwoPolygon.geoId }}</span>
-              </div>
-              <h2>2</h2>
+        <div class="location-popup">
+          <div class="infowindow-board">
+            <div class="infowindow-board__info">
+              <span class="infowindow-board__info__name">{{
+                compareTwoPolygon.countyName
+              }}</span>
+              <span class="infowindow-board__info__geo-id">{{
+                compareTwoPolygon.geoId
+              }}</span>
             </div>
-            <div class="infowindow-btn-area">
-              <button
-                style="
-                  color: #2275c3;
-                  font-size: 12px;
-                  display: block !important;
-                  border: none !important;
-                  background: unset;
-                  padding: unset;
-                "
-                @click="compareAdd"
-              >
-                COMPARE
-              </button>
-              <!--Add btn-->
-              <button
-                style="
-                  background: none;
-                  border: none;
-                  border-radius: 100px;
-                  padding: unset;
-                "
-                @click="addCompareList"
-              >
-                <img
-                  style="height: 27px"
-                  src="~assets/icons/icon-plus.png"
-                  alt="plus-icon"
-                />
-              </button>
-            </div>
+            <h2 class="infowindow-board__order">2</h2>
+          </div>
+          <div class="location-popup__actions">
+            <button
+              class="location-popup__actions__compare"
+              @click="compareAdd"
+            >
+              COMPARE
+            </button>
+            <!--Add btn-->
+            <button
+              class="location-popup__actions__add"
+              @click="addCompareList"
+            >
+              <img
+                draggable="false"
+                src="~assets/icons/icon-plus.png"
+                alt="plus-icon"
+              />
+            </button>
           </div>
         </div>
       </gmap-info-window>
@@ -512,7 +496,7 @@ export default {
         this.marked_compare_two = true;
       }
     },
-    searchState: async function (place) {
+    async searchState(place) {
       // initial the status as basic
       this.loading = true;
       this.selectState = null;
@@ -538,22 +522,22 @@ export default {
       this.zoom = 8;
       this.loading = false;
     },
-    compare: function () {
+    compare() {
       this.compareFlag = true;
       this.calcMainInfo = this.compareOnePolygon;
       this.info = true;
     },
-    compareAdd: function () {
+    compareAdd() {
       this.calcSideBarInfo = this.secondPolygon;
       this.status = !this.status;
     },
-    addCompareList: function () {
+    addCompareList() {
       this.resultItems.push(this.secondPolygon);
     },
-    removePolygon: function (index) {
+    removePolygon(index) {
       this.resultItems.splice(index, 1);
     },
-    comparePolygon: function (index) {
+    comparePolygon(index) {
       this.compare_two_window_open = true;
       this.compare_two_Infowindow = {
         lat: this.resultItems[index].path[0].lat,
@@ -564,7 +548,7 @@ export default {
       this.secondPolygon = this.resultItems[index];
       this.marked_compare_two = true;
     },
-    calculator: function () {
+    calculator() {
       // calculate by activeTab
       if (this.activeTab === 'investment') {
         if (
@@ -957,36 +941,70 @@ export default {
   left: 100px;
   top: calc(50px + 78px);
 }
+
+.location-popup {
+  padding: 11px;
+  padding-bottom: 20px;
+}
+
 .infowindow-board {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 
-  div {
-    margin-right: 30px;
+  &__info {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+
+    &__name {
+      color: #707070;
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 3px;
+    }
+
+    &__geo-id {
+      color: #707070;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
   }
-  span:first-child {
-    color: #707070;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  span:nth-child(2) {
-    color: #707070;
-    font-size: 12px;
-  }
-  h2 {
+
+  &__order {
     color: #b5b9bf;
-    font-size: 44px;
-  }
-  .compare-btn {
-    color: #2275c3 !important;
-    display: block !important;
-    font-size: 12px !important;
+    font-size: 53px;
+    margin: 0;
+    line-height: 0.8;
+    font-weight: 400;
   }
 }
-.infowindow-btn-area {
+
+.location-popup__actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 27px;
+
+  &__compare {
+    color: #2275c3;
+    font-size: 14px;
+    border: none;
+    background: unset;
+    padding: unset;
+    font-weight: 300;
+  }
+
+  &__add {
+    background: none;
+    border: none;
+    border-radius: 100px;
+    padding: unset;
+
+    & img {
+      height: 27px;
+    }
+  }
 }
 </style>
