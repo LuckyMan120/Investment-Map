@@ -554,11 +554,47 @@ export default {
       this.info = true;
     },
     compareAdd() {
-      this.calcSideBarInfo = this.secondPolygon;
-      this.status = !this.status;
+      let listFlag = false;
+      // search in first compare board
+      if (this.calcMainInfo.geoId === this.secondPolygon.geoid) {
+        dialogs.message('Already added into First Compare Board!', {
+          duration: 10,
+          state: 'error',
+        });
+        listFlag = true;
+        return;
+      }
+
+      if (!listFlag) {
+        this.calcSideBarInfo = this.secondPolygon;
+        this.status = !this.status;
+      }
     },
     addCompareList() {
-      this.resultItems.push(this.secondPolygon);
+      let listFlag = false;
+      // search in first compare board
+      if (this.calcMainInfo.geoId === this.secondPolygon.geoid) {
+        dialogs.message('Already added into First Compare Board!', {
+          duration: 10,
+          state: 'error',
+        });
+        listFlag = true;
+        return;
+      }
+
+      // search in compare list
+      this.resultItems.forEach((item) => {
+        if (item.geoid === this.secondPolygon.geoid) {
+          dialogs.message('Already added into Compare List!', {
+            duration: 10,
+            state: 'error',
+          });
+          listFlag = true;
+          return;
+        }
+      });
+
+      if (!listFlag) this.resultItems.push(this.secondPolygon);
     },
     removePolygon(index) {
       this.resultItems.splice(index, 1);

@@ -9,6 +9,7 @@
           <gmap-autocomplete
             @place_changed="setFromtownPlace"
             :options="options"
+            placeholder="Search Location"
             class="input"
           ></gmap-autocomplete>
           <img
