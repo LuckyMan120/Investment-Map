@@ -76,14 +76,14 @@
 
           <div v-for="i in 1" :key="i" class="info-content-main">
             <span ref="mainInfoText" class="info-content-row-text">
-              Uranized / Total Population
+              Urbanized / Total Population
             </span>
             <span class="info-content-row-value">{{
               mainInfo.data.population
             }}</span>
 
             <span ref="mainInfoText" class="info-content-row-text">
-              Number of pelple with college degree or higher / total population
+              Number of people with college degree or higher / total population
             </span>
             <span class="info-content-row-value">{{
               mainInfo.data.degree

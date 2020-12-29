@@ -205,7 +205,18 @@
               </button>
             </div>
             <div class="col-md-6 d-flex justify-content-start">
-              <button class="button">Download</button>
+              <button class="button">
+                <downloadexcel
+                  :data="investData"
+                  :fields="chooseField('invest')"
+                  worksheet="My Worksheet"
+                  type="csv"
+                  :before-generate="startDownload"
+                  name="invest.xls"
+                >
+                  Download
+                </downloadexcel>
+              </button>
             </div>
           </div>
         </section>
@@ -305,7 +316,18 @@
               </button>
             </div>
             <div class="col-md-6 d-flex justify-content-start">
-              <button class="button">Download</button>
+              <button class="button">
+                <downloadexcel
+                  :data="realData"
+                  :fields="chooseField('real')"
+                  worksheet="My Worksheet"
+                  type="csv"
+                  :before-generate="startDownload"
+                  name="real.xls"
+                >
+                  Download
+                </downloadexcel>
+              </button>
             </div>
           </div>
         </section>
@@ -339,6 +361,7 @@ import sectors from '@/static/data/sector.json';
 import stickIcon from '@/assets/images/stickIcon.png';
 import dialogs from '@/assets/modules/dialogs.js';
 import moment from 'moment';
+import downloadexcel from 'vue-json-excel';
 
 export default {
   layout: 'calculator',
@@ -348,6 +371,7 @@ export default {
     Select,
     CalculatorChart,
     Loading,
+    downloadexcel,
   },
   data: () => ({
     loading: false,
@@ -468,6 +492,8 @@ export default {
     realOZ: '',
     realNotOZ: '',
     realDifference: '',
+    investData: [],
+    realData: [],
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
@@ -628,6 +654,17 @@ export default {
             ? this.OZ.toFixed(0)
             : (this.OZ / 1000).toFixed(1) + 'k';
 
+        // save invest download data
+        let invest = {};
+        invest['initial'] = this.A1;
+        invest['cash'] = this.A2;
+        invest['sales'] = this.A3;
+        invest['employees'] = this.A4;
+        invest['oz'] = this.OZ.toFixed(1);
+        invest['notOZ'] = this.notOZ.toFixed(1);
+        invest['federal'] = ((this.difference / 3) * 2).toFixed(1);
+        this.investData.push(invest);
+
         this.isInvestCalculated = true;
         dialogs.message('Statistics Completed.', {
           duration: 10,
@@ -740,8 +777,19 @@ export default {
             : ((step * 3) / 1000).toFixed(1) + 'k';
         this.realCalculatorChartRange[3] =
           this.realOZ < 1000
-            ? this.realOZ.toFixed(0)
+            ? this.realOZ
             : (this.realOZ / 1000).toFixed(1) + 'k';
+
+        // save real download data
+        let real = {};
+        real['paid'] = this.B1;
+        real['sold'] = this.B2;
+        real['rate'] = this.B3;
+        real['period'] = this.B4;
+        real['oz'] = this.realOZ;
+        real['notOZ'] = this.realNotOZ;
+        real['federal'] = ((this.realDifference / 3) * 2).toFixed(1);
+        this.realData.push(real);
 
         this.isRealCalculated = true;
         dialogs.message('Statistics Completed.', {
@@ -749,6 +797,32 @@ export default {
           state: 'success',
         });
       }
+    },
+    chooseField: function (title) {
+      if (title === 'invest') {
+        return {
+          'Initial Value of Business': 'initial',
+          'Cash Investment in Business': 'cash',
+          'Sales Price of the Business': 'sales',
+          'Number of Employees': 'employees',
+          OZ: 'oz',
+          WithoutOZ: 'notOZ',
+          Federal: 'federal',
+        };
+      } else {
+        return {
+          'Price paid for the Asset': 'paid',
+          'Sold price of the Asset': 'sold',
+          'Assumed Growth rate (%)': 'rate',
+          'Holding Period (years)': 'period',
+          OZ: 'oz',
+          WithoutOZ: 'notOZ',
+          Federal: 'federal',
+        };
+      }
+    },
+    startDownload: function () {
+      window.alert('Start Downloading');
     },
   },
   head() {

@@ -63,7 +63,7 @@ button:focus {
   cursor: pointer;
   height: 16px;
   width: auto;
-  margin: 0 25px
+  margin: 0 25px;
 }
 
 /* disable the below small triangle/anchor */
@@ -84,4 +84,7 @@ button:focus {
 .gm-style-iw.gm-style-iw-c {
   padding: 0;
   min-width: 170px !important;
+}
+.alertify-notifier.ajs-right .ajs-message {
+  color: white !important;
 }
