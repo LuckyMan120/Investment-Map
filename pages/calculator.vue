@@ -9,10 +9,23 @@
       class="calculator-page"
       :options="mapStyle"
     >
-      <!-- polygons -->
+      <!-- Polylines of each state -->
+      <gmap-polyline
+        v-for="(path, index) in selectedStatePath"
+        :key="'polyline' + index"
+        v-bind:path.sync="path"
+        v-bind:options="{
+          strokeColor: '#d45fa0',
+          strokeOpacity: 0.5,
+          clickable: true,
+        }"
+      >
+      </gmap-polyline>
+
+      <!-- Polygons of each state -->
       <gmap-polygon
-        v-for="(polygon, count) in selectState"
-        :key="count"
+        v-for="(polygon, index) in selectState"
+        :key="'polygon' + index"
         :path.sync="polygon.path"
         :options="{
           strokeColor: '#00bcf0',
@@ -97,6 +110,88 @@
         :icon="stickIcon"
         :position="compare_two_Infowindow"
       />
+
+      <!-- searched schools -->
+      <GmapMarker
+        v-for="(yellowpin, index) in schoolsData"
+        :key="'yellowpin' + index"
+        :icon="yellowIcon"
+        :position="getPosition(yellowpin)"
+        @click="showPinDetail(yellowpin)"
+      />
+
+      <!-- school pin infowindow -->
+      <gmap-info-window
+        @closeclick="open_school_pin = false"
+        :opened="open_school_pin"
+        :position="school_pin_latlng"
+        :options="{
+          pixelOffset: {
+            width: 0,
+            height: 110,
+          },
+        }"
+      >
+        <table>
+          <tr>
+            <td>School Name</td>
+            <td>{{ schoolPinData.name }}</td>
+          </tr>
+          <tr>
+            <td>Student Population</td>
+            <td>{{ schoolPinData.population }}</td>
+          </tr>
+        </table>
+      </gmap-info-window>
+
+      <!-- searched companies -->
+      <GmapMarker
+        v-for="(pinkpin, index) in companyData"
+        :key="'pinkpin' + index"
+        :icon="pinkIcon"
+        :position="getPosition(pinkpin)"
+        @click="showPinDetail(pinkpin)"
+      />
+
+      <!-- company pin infowindow -->
+      <gmap-info-window
+        @closeclick="open_company_pin = false"
+        :opened="open_company_pin"
+        :position="company_pin_latlng"
+        :options="{
+          pixelOffset: {
+            width: 0,
+            height: 110,
+          },
+        }"
+      >
+        <table>
+          <tr>
+            <td>Title</td>
+            <td>{{ companyPinData.title }}</td>
+          </tr>
+          <tr>
+            <td>Rank</td>
+            <td>{{ companyPinData.rank }}</td>
+          </tr>
+          <tr>
+            <td>Employees</td>
+            <td>{{ companyPinData.employers }}</td>
+          </tr>
+          <tr>
+            <td>Sector</td>
+            <td>{{ companyPinData.sector }}</td>
+          </tr>
+          <tr>
+            <td>Revenues</td>
+            <td>{{ companyPinData.revenues }}</td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td>{{ companyPinData.state }}</td>
+          </tr>
+        </table>
+      </gmap-info-window>
     </GmapMap>
     <!--Tabs-->
     <CalculatorTabs
@@ -130,7 +225,10 @@
         <section class="investment-pre-calc">
           <div class="input-select-container mr-4">
             <span class="input-select-label">State</span>
-            <Select v-model="stateSelect" :select-items="stateSelectItems" />
+            <Select
+              v-model="stateSelectInvest"
+              :select-items="stateSelectItems"
+            />
           </div>
 
           <div class="input-select-container">
@@ -229,7 +327,7 @@
         class="real-estate-tab"
       >
         <header class="calculator-header">
-          <h1 class="calculator-header-title">Investment</h1>
+          <h1 class="calculator-header-title">Real Estate</h1>
           <button class="calculator-header-help-btn">
             <img
               src="~assets/icons/question-mark-circle-grey.png"
@@ -239,7 +337,7 @@
           </button>
           <h2 class="calculator-header-subtitle">Calculator</h2>
           <Select
-            v-model="stateSelect"
+            v-model="stateSelectReal"
             class="calculator-header-select"
             :select-items="stateSelectItems"
           />
@@ -349,19 +447,27 @@
 </template>
 
 <script>
+import dialogs from '@/assets/modules/dialogs.js';
+import moment from 'moment';
+import downloadexcel from 'vue-json-excel';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import CalculatorTabs from '@/components/CalculatorTabs/CalculatorTabs.vue';
 import CalculatorSearch from '@/components/CalculatorSearch/CalculatorSearch.vue';
 import Select from '@/components/Select/Select.vue';
 import CalculatorChart from '@/components/CalculatorChart/CalculatorChart.vue';
 import Loading from '@/components/Loading/Loading.vue';
+
+// import jsons
 import mapStyle from '@/static/data/mapStyle.json';
 import states from '@/static/data/states.json';
 import sectors from '@/static/data/sector.json';
+import company from '@/static/data/company.json';
+import school from '@/static/data/schools.json';
+
+// import images
 import stickIcon from '@/assets/images/stickIcon.png';
-import dialogs from '@/assets/modules/dialogs.js';
-import moment from 'moment';
-import downloadexcel from 'vue-json-excel';
+import pinkIcon from '@/assets/images/pink.png';
+import yellowIcon from '@/assets/images/yellow.png';
 
 export default {
   layout: 'calculator',
@@ -376,11 +482,32 @@ export default {
   data: () => ({
     loading: false,
     // State select
-    stateSelect: 'Alabama',
+    stateSelectInvest: 'Select State',
+    stateSelectReal: 'Select State',
     stateSelectItems: states.states,
     // Health care select
-    sectorSelect: 'Retailing',
+    sectorSelect: 'Select Sector',
     sectorSelectItems: sectors.sectors,
+
+    // company and school
+    companyStaticData: company.company,
+    schoolStaticData: school.schools,
+    open_school_pin: false,
+    open_company_pin: false,
+    school_pin_latlng: null,
+    company_pin_latlng: null,
+    schoolPinData: {
+      name: '',
+      population: '',
+    },
+    companyPinData: {
+      title: '',
+      rank: '',
+      employers: '',
+      sector: '',
+      revenues: '',
+      state: '',
+    },
 
     // Tabs
     activeTab: '',
@@ -460,6 +587,14 @@ export default {
     stickIcon: {
       url: stickIcon,
     },
+    yellowIcon: {
+      scaledSize: { width: 10, height: 10 },
+      url: yellowIcon,
+    },
+    pinkIcon: {
+      scaledSize: { width: 10, height: 10 },
+      url: pinkIcon,
+    },
     compare_one_window_open: false,
     compare_one_Infowindow: null,
     compareOnePolygon: {
@@ -494,9 +629,86 @@ export default {
     realDifference: '',
     investData: [],
     realData: [],
+    statesData: null,
+    selectedStatePath: null,
+    schoolsData: null,
+    companyData: null,
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
+  },
+  async mounted() {
+    this.loading = true;
+    const states = await this.$axios.get('/earth/getStates');
+    // get select state of the USA
+    let stateDetails = [];
+    states.data.state.kml.Document.Placemark.forEach((item) => {
+      let eachStateDetail = {};
+      if (Object.keys(item.MultiGeometry)[1] === 'MultiGeometry') {
+        let eachState = [];
+        item.MultiGeometry.MultiGeometry.Polygon.forEach((pol) => {
+          let eachPol = [];
+          let polys = pol.outerBoundaryIs.LinearRing.coordinates._text;
+
+          var coordinates = polys.split(' ');
+          coordinates.forEach((each) => {
+            if (each.length > 2) {
+              var coordinate = each.split(',');
+              var pointPolys = {
+                lat: parseFloat(coordinate[1]),
+                lng: parseFloat(coordinate[0]),
+              };
+              eachPol.push(pointPolys);
+            }
+          });
+          eachState.push(eachPol);
+        });
+        eachStateDetail['path'] = eachState;
+      } else {
+        let eachState = [];
+        let polys =
+          item.MultiGeometry.Polygon.outerBoundaryIs.LinearRing.coordinates
+            ._text;
+        let eachPol = [];
+
+        var coordinates = polys.split(' ');
+        coordinates.forEach((each) => {
+          if (each.length > 2) {
+            var coordinate = each.split(',');
+            var pointPolys = {
+              lat: parseFloat(coordinate[1]),
+              lng: parseFloat(coordinate[0]),
+            };
+            eachPol.push(pointPolys);
+          }
+        });
+        eachState.push(eachPol);
+        eachStateDetail['path'] = eachState;
+      }
+
+      var point = item.MultiGeometry.Point.coordinates._text.split(' ');
+      point.forEach((e) => {
+        if (e.length > 2) {
+          var coord = e.split(',');
+          var markedPoint = {
+            lat: parseFloat(coord[1]),
+            lng: parseFloat(coord[0]),
+          };
+          eachStateDetail['center'] = markedPoint;
+        }
+      });
+
+      if (item.name._cdata.split(' ').length > 2) {
+        eachStateDetail['name'] =
+          item.name._cdata.split(' ')[0] + ' ' + item.name._cdata.split(' ')[1];
+      } else {
+        eachStateDetail['name'] = item.name._cdata.split(' ')[0];
+      }
+
+      stateDetails.push(eachStateDetail);
+    });
+    this.statesData = stateDetails;
+    this.loading = false;
   },
   methods: {
     showDetails(polygon) {
@@ -528,6 +740,11 @@ export default {
       this.selectState = null;
       this.calcMainInfo = null;
       this.calcSideBarInfo = null;
+      this.selectedStatePath = null;
+      this.schoolsData = null;
+      this.companyData = null;
+      this.open_school_pin = false;
+      this.open_company_pin = false;
       this.resultItems = [];
       this.compare_one_window_open = false;
       this.compare_two_window_open = false;
@@ -541,6 +758,14 @@ export default {
       const data = {};
       data.name = place.name;
       const polygons = await this.$axios.post('/earth/search', data);
+
+      // search border of searched state
+      this.statesData.forEach((item) => {
+        if (item.name === place.name) {
+          this.selectedStatePath = item.path;
+          this.center = item.center;
+        }
+      });
 
       // set the searched polygons and map center
       this.selectState = polygons.data;
@@ -610,7 +835,7 @@ export default {
       this.secondPolygon = this.resultItems[index];
       this.marked_compare_two = true;
     },
-    calculator() {
+    async calculator() {
       // calculate by activeTab
       if (this.activeTab === 'investment') {
         if (
@@ -630,15 +855,21 @@ export default {
           return;
         }
 
-        // if (this.state === 'Select State') {
-        // 	dialogs.message('You have to select the state.', { duration: 10, state: 'error' });
-        // 	return;
-        // }
+        if (this.stateSelectInvest === 'Select State') {
+          dialogs.message('You have to select the state.', {
+            duration: 10,
+            state: 'error',
+          });
+          return;
+        }
 
-        // if (this.sector === 'Select Sector') {
-        // 	dialogs.message('You have to select the sector.', { duration: 10, state: 'error' });
-        // 	return;
-        // }
+        if (this.sectorSelect === 'Select Sector') {
+          dialogs.message('You have to select the sector.', {
+            duration: 10,
+            state: 'error',
+          });
+          return;
+        }
 
         if (this.A3 - this.A2 - this.A1 < 0) {
           dialogs.message(
@@ -647,6 +878,63 @@ export default {
           );
           return;
         }
+
+        // initial the status as basic
+        this.loading = true;
+        this.selectState = null;
+        this.calcMainInfo = null;
+        this.calcSideBarInfo = null;
+        this.schoolsData = null;
+        this.companyData = null;
+        this.resultItems = [];
+        this.selectedStatePath = null;
+        this.window_open_first = false;
+        this.open_school_pin = false;
+        this.compare_one_window_open = false;
+        this.compare_two_window_open = false;
+        this.marked_compare_one = false;
+        this.marked_compare_two = false;
+        this.info = false;
+        this.compareFlag = false;
+        this.zoom = 6;
+        this.center = { lat: 37.09024, lng: -95.712891 };
+
+        // get polygons from back-end
+        const data = {};
+        data.name = this.stateSelectInvest;
+        const polygons = await this.$axios.post('/earth/search', data);
+        this.selectState = polygons.data;
+
+        // search border of selected state
+        this.statesData.forEach((item) => {
+          if (item.name === this.stateSelectInvest) {
+            this.selectedStatePath = item.path;
+            this.center = item.center;
+          }
+        });
+
+        // search school
+        let schools = [];
+        this.schoolStaticData.forEach((school) => {
+          if (school.State === this.stateSelectInvest) {
+            schools.push(school);
+          }
+        });
+
+        this.schoolsData = schools;
+
+        // search company
+        let companies = [];
+        this.companyStaticData.forEach((company) => {
+          if (
+            company.State === this.stateSelectInvest &&
+            company.Sector === this.sectorSelect
+          ) {
+            companies.push(company);
+          }
+        });
+
+        this.companyData = companies;
 
         this.OZ = this.A3 - this.A1 - this.A2;
         this.notOZ = (this.A3 - this.A1 - this.A2) * 0.75;
@@ -753,6 +1041,48 @@ export default {
           return;
         }
 
+        if (this.stateSelectReal === 'Select State') {
+          dialogs.message('You have to select the state.', {
+            duration: 10,
+            state: 'error',
+          });
+          return;
+        }
+
+        // initial the status as basic
+        this.loading = true;
+        this.selectState = null;
+        this.calcMainInfo = null;
+        this.calcSideBarInfo = null;
+        this.schoolsData = null;
+        this.companyData = null;
+        this.resultItems = [];
+        this.selectedStatePath = null;
+        this.window_open_first = false;
+        this.open_school_pin = false;
+        this.compare_one_window_open = false;
+        this.compare_two_window_open = false;
+        this.marked_compare_one = false;
+        this.marked_compare_two = false;
+        this.info = false;
+        this.compareFlag = false;
+        this.zoom = 6;
+        this.center = { lat: 37.09024, lng: -95.712891 };
+
+        // get polygons from back-end
+        const data = {};
+        data.name = this.stateSelectReal;
+        const polygons = await this.$axios.post('/earth/search', data);
+        this.selectState = polygons.data;
+
+        // search border of selected state
+        this.statesData.forEach((item) => {
+          if (item.name === this.stateSelectReal) {
+            this.selectedStatePath = item.path;
+            this.center = item.center;
+          }
+        });
+
         let current = new Date();
         let B7 =
           this.B2 *
@@ -833,6 +1163,8 @@ export default {
           state: 'success',
         });
       }
+
+      this.loading = false;
     },
     chooseField: function (title) {
       if (title === 'invest') {
@@ -859,6 +1191,41 @@ export default {
     },
     startDownload: function () {
       window.alert('Start Downloading');
+    },
+    getPosition: function (pin) {
+      return {
+        lat: pin.Latitude,
+        lng: pin.Longitude,
+      };
+    },
+    showPinDetail: function (pin) {
+      if (Object.keys(pin).length === 5) {
+        // school pin
+        let data = {
+          lat: pin.Latitude,
+          lng: pin.Longitude,
+        };
+        this.school_pin_latlng = data;
+        this.schoolPinData.name = pin['School Name'];
+        this.schoolPinData.population = pin['Student Population'];
+
+        this.open_school_pin = true;
+      } else {
+        // company pin
+        let data = {
+          lat: pin.Latitude,
+          lng: pin.Longitude,
+        };
+        this.company_pin_latlng = data;
+        this.companyPinData.title = pin['Title'];
+        this.companyPinData.rank = pin['Rank'];
+        this.companyPinData.employers = pin['Employees'];
+        this.companyPinData.sector = pin['Sector'];
+        this.companyPinData.revenues = pin['Revenues'];
+        this.companyPinData.state = pin['State'];
+
+        this.open_company_pin = true;
+      }
     },
   },
   head() {

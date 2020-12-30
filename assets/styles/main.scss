@@ -7,6 +7,21 @@ body {
   font-family: Proxima, sans-serif;
 }
 
+th,
+td,
+tr {
+  border: 1px solid black;
+  padding: 5px;
+}
+table {
+  border-spacing: 15px;
+  margin: 10px;
+  border-collapse: collapse;
+}
+table td {
+  font-weight: bold;
+}
+
 body,
 html {
   scroll-behavior: smooth;
@@ -73,6 +88,8 @@ button:focus {
 // .gm-style-iw button {
 //   display: none !important;
 // }
+
+// disable the close icon
 .gm-ui-hover-effect {
   display: none !important;
 }

@@ -102,9 +102,9 @@ export default {
 
   mounted() {
     if (this.modelValue.length > 0) {
-      this.localSelectModel = this.selectItems.find(
-        (item) => item === this.modelValue
-      );
+      let value = this.selectItems.find((item) => item === this.modelValue);
+
+      this.localSelectModel = value === undefined ? this.modelValue : value;
     }
 
     this.localSelectItems = [...this.selectItems];
