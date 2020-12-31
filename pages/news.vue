@@ -8,7 +8,7 @@
           <h2 class="page-into-section-title">
             With latest information on opportunity zones
           </h2>
-          <a href="#spot-light">
+          <a href="#feature">
             <img
               src="~assets/icons/arrow-down.png"
               class="page-into-section-icon"
@@ -19,7 +19,7 @@
       </div>
     </section>
 
-    <section class="container-fluid featured-section">
+    <section id="feature" class="container-fluid featured-section">
       <div class="row">
         <div class="col-md-12">
           <SubjectHeader title="Featured" />
@@ -91,7 +91,7 @@
       </div>
     </section>
 
-    <section id="spot-light" class="container-fluid news-section">
+    <section class="container-fluid news-section">
       <div class="row">
         <div class="col-md-12">
           <SubjectHeader title="Spot Light" />
