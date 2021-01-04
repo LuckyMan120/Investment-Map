@@ -1,6 +1,6 @@
 <template>
   <div class="news-page">
-    <HeroCarousel :items="carouselItems" btnOutline />
+    <HeroCarousel :items="carouselItems" btnOutline title="news" />
 
     <section class="container page-into-section">
       <div class="row justify-content-center align-items-center">
@@ -47,7 +47,7 @@
       </div>
     </section>
 
-    <section class="container-fluid spot-light-section">
+    <section id="spot" class="container-fluid spot-light-section">
       <div class="row">
         <div class="col-md-12">
           <SubjectHeader title="Spot Light" />

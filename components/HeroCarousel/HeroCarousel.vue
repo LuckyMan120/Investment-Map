@@ -10,11 +10,20 @@
           <h1 class="slide-heading">{{ item.title }}</h1>
           <h2 class="slide-subheading">{{ item.subtitle }}</h2>
           <nuxt-link
+            v-if="title !== 'news'"
             to="/calculator"
             class="slide-btn"
             :class="{ 'slide-btn--outline': btnOutline }"
             >{{ item.button }}</nuxt-link
           >
+          <a
+            v-else
+            href="#spot"
+            class="slide-btn"
+            :class="{ 'slide-btn--outline': btnOutline }"
+          >
+            {{ item.button }}
+          </a>
         </div>
       </div>
     </VueSlickCarousel>
@@ -31,6 +40,10 @@ export default Vue.extend({
       default: () => [],
     },
     btnOutline: Boolean,
+    title: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
