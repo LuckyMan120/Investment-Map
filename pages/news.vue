@@ -6,7 +6,7 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-md-7">
           <h2 class="page-into-section-title">
-            With latest information on opportunity zones
+            The latest on opportunity zones
           </h2>
           <a href="#feature">
             <img

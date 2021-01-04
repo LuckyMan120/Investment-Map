@@ -9,11 +9,11 @@
         <div class="slide-content">
           <h1 class="slide-heading">{{ item.title }}</h1>
           <h2 class="slide-subheading">{{ item.subtitle }}</h2>
-          <a
-            href="#"
+          <nuxt-link
+            to="/calculator"
             class="slide-btn"
             :class="{ 'slide-btn--outline': btnOutline }"
-            >{{ item.button }}</a
+            >{{ item.button }}</nuxt-link
           >
         </div>
       </div>

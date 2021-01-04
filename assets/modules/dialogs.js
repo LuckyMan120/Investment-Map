@@ -16,7 +16,6 @@ export default {
       options = {};
     }
     options = Object.assign(defaultOptions, options);
-    console.log(options);
     if (
       window &&
       window.plugins &&

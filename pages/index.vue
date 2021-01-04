@@ -97,7 +97,9 @@
                     real estate in major US cities with long-term growth
                     potential.
                   </p>
-                  <a href="#" class="button">Invest Now</a>
+                  <nuxt-link to="/calculator" class="button"
+                    >Invest Now</nuxt-link
+                  >
                 </div>
               </b-col>
               <b-col cols="7" class="img-column">

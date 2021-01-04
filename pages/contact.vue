@@ -5,7 +5,7 @@
         <div class="get-in-touch-content">
           <h2>Get in touch</h2>
           <h3>We’d love to hear from you.</h3>
-          <a href="#" class="button button-outline">MESSAGE</a>
+          <a href="#message" class="button button-outline">MESSAGE</a>
         </div>
       </div>
     </section>
@@ -29,7 +29,7 @@
       </div>
     </section>
 
-    <section class="form-section">
+    <section id="message" class="form-section">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -187,7 +187,7 @@ export default Vue.extend({
 }
 
 .form-section {
-  margin-top: 50px;
+  padding-top: 50px;
 
   h3 {
     font-size: 1.86rem;

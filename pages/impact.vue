@@ -8,7 +8,9 @@
             <h3 class="hero-subtitle">
               Opportunity Zones fuelling exponential growth.
             </h3>
-            <a href="#" class="button button-solid">Learn More</a>
+            <nuxt-link to="/calculator" class="button button-solid"
+              >Learn More</nuxt-link
+            >
           </div>
         </div>
       </div>

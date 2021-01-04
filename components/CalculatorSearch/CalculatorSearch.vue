@@ -70,6 +70,7 @@ export default {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng(),
             };
+            searchData['title'] = place.formatted_address;
             this.$emit('search', searchData);
             return;
           }

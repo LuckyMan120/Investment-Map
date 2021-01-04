@@ -192,6 +192,9 @@
           </tr>
         </table>
       </gmap-info-window>
+
+      <!-- searched marker -->
+      <GmapMarker v-if="marked" :position="markedPosition" :label="title" />
     </GmapMap>
     <!--Tabs-->
     <CalculatorTabs
@@ -613,14 +616,14 @@ export default {
     marked_compare_two: false,
     compareFlag: false,
     status: false,
-    B1: null,
-    B2: null,
-    B3: null,
-    B4: null,
-    A1: null,
-    A2: null,
-    A3: null,
-    A4: null,
+    B1: 10000,
+    B2: 10000,
+    B3: 6,
+    B4: 10,
+    A1: 1000,
+    A2: 1,
+    A3: 10000,
+    A4: 1,
     OZ: '',
     notOZ: '',
     difference: '',
@@ -633,6 +636,12 @@ export default {
     selectedStatePath: null,
     schoolsData: null,
     companyData: null,
+    marked: false,
+    markedPosition: null,
+    title: {
+      text: '',
+      color: 'white',
+    },
   }),
   computed: {
     faChevronLeft: () => faChevronLeft,
@@ -737,6 +746,7 @@ export default {
     async searchState(place) {
       // initial the status as basic
       this.loading = true;
+      this.marked = false;
       this.selectState = null;
       this.calcMainInfo = null;
       this.calcSideBarInfo = null;
@@ -766,6 +776,11 @@ export default {
           this.center = item.center;
         }
       });
+
+      // set searched pin details
+      this.marked = true;
+      this.markedPosition = place.center;
+      this.title.text = place.title;
 
       // set the searched polygons and map center
       this.selectState = polygons.data;
@@ -839,10 +854,6 @@ export default {
       // calculate by activeTab
       if (this.activeTab === 'investment') {
         if (
-          this.A1 === null ||
-          this.A2 === null ||
-          this.A3 === null ||
-          this.A4 === null ||
           this.A1 === '' ||
           this.A2 === '' ||
           this.A3 === '' ||
@@ -882,6 +893,7 @@ export default {
         // initial the status as basic
         this.loading = true;
         this.selectState = null;
+        this.marked = false;
         this.calcMainInfo = null;
         this.calcSideBarInfo = null;
         this.schoolsData = null;
@@ -935,6 +947,7 @@ export default {
         });
 
         this.companyData = companies;
+        this.zoom = 8;
 
         this.OZ = this.A3 - this.A1 - this.A2;
         this.notOZ = (this.A3 - this.A1 - this.A2) * 0.75;
@@ -996,10 +1009,10 @@ export default {
         });
       } else {
         if (
-          this.B1 === null ||
-          this.B2 === null ||
-          this.B3 === null ||
-          this.B4 === null
+          this.B1 === '' ||
+          this.B2 === '' ||
+          this.B3 === '' ||
+          this.B4 === ''
         ) {
           dialogs.message('You have to insert all values.', {
             duration: 10,
@@ -1033,8 +1046,8 @@ export default {
           });
           return;
         }
-        if (parseInt(this.B4) < 10 || parseInt(this.B4) > 20) {
-          dialogs.message('The Period must be the value up 10 to 20.', {
+        if (parseInt(this.B4) < 10 || parseInt(this.B4) > 26) {
+          dialogs.message('The Period must be the value up 10 to 26.', {
             duration: 10,
             state: 'error',
           });
@@ -1053,6 +1066,7 @@ export default {
         this.loading = true;
         this.selectState = null;
         this.calcMainInfo = null;
+        this.marked = false;
         this.calcSideBarInfo = null;
         this.schoolsData = null;
         this.companyData = null;
@@ -1082,6 +1096,8 @@ export default {
             this.center = item.center;
           }
         });
+
+        this.zoom = 8;
 
         let current = new Date();
         let B7 =
