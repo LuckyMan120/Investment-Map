@@ -52,7 +52,6 @@ export default {
 
   axios: {
     baseURL: 'http://localhost:4000',
-    // baseURL: 'http://146.71.77.95:4000',
   },
 
   styleResources: {
